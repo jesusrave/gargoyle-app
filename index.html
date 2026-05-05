@@ -23,20 +23,18 @@
     .stat-value { font-size: 22px; font-weight: 600; color: #fff; }
     .stat-sub { font-size: 10px; color: #4ade80; margin-top: 3px; }
     .section-label { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 14px 8px; }
-    .holder-row { display: flex; align-items: flex-start; gap: 10px; padding: 11px 14px; border-bottom: 0.5px solid #181818; cursor: pointer; }
-    .holder-row:active { background: #161616; }
+    .holder-row { display: flex; align-items: flex-start; gap: 10px; padding: 11px 14px; border-bottom: 0.5px solid #181818; }
     .rank { font-size: 12px; color: #444; width: 20px; text-align: center; flex-shrink: 0; padding-top: 10px; }
     .rank.gold { color: #fbbf24; } .rank.silver { color: #9ca3af; } .rank.bronze { color: #cd7f32; }
-    .holder-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: #1e1e1e; border: 0.5px solid #333; }
-    .holder-avatar-placeholder { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+    .holder-avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
     .holder-info { flex: 1; min-width: 0; }
-    .holder-name { font-size: 14px; color: #fff; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+    .holder-name { font-size: 14px; color: #fff; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .holder-nfts { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
     .nft-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; padding: 3px 8px; background: #1a2a3a; color: #60a5fa; border-radius: 20px; text-decoration: none; }
     .holder-right { text-align: right; flex-shrink: 0; padding-top: 2px; }
     .holder-count { font-size: 18px; font-weight: 600; color: #fff; }
     .holder-pct { font-size: 10px; color: #555; margin-top: 2px; }
-    .badge { font-size: 10px; padding: 2px 6px; border-radius: 20px; font-weight: 500; margin-left: 4px; }
+    .badge { font-size: 10px; padding: 2px 6px; border-radius: 20px; font-weight: 500; margin-left: 4px; vertical-align: middle; }
     .badge-whale { background: #2a1e00; color: #fbbf24; }
     .badge-og { background: #1e2a1e; color: #4ade80; }
     .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; padding: 3px; }
@@ -45,8 +43,7 @@
     .gallery-img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 26px; background: #1a1a1a; }
     .gallery-num { position: absolute; bottom: 4px; left: 4px; font-size: 10px; background: rgba(0,0,0,0.75); color: #aaa; padding: 1px 5px; border-radius: 6px; }
-    .gallery-owner { position: absolute; bottom: 4px; right: 4px; font-size: 9px; background: rgba(0,0,0,0.8); color: #4ade80; padding: 1px 5px; border-radius: 6px; max-width: 70%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .gallery-loading { position: absolute; top: 4px; right: 4px; width: 6px; height: 6px; border-radius: 50%; background: #fbbf24; animation: blink 1s infinite; }
+    .gallery-owner { position: absolute; top: 4px; left: 4px; right: 4px; font-size: 9px; background: rgba(0,0,0,0.8); color: #4ade80; padding: 2px 5px; border-radius: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .price-section { padding: 12px; }
     .price-card { background: #161616; border: 0.5px solid #222; border-radius: 14px; padding: 18px; margin-bottom: 10px; }
     .price-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
@@ -70,9 +67,10 @@
     .link-val { color: #4ade80; text-decoration: none; }
     .contract-addr { font-family: monospace; font-size: 10px; color: #444; word-break: break-all; padding: 10px 14px; background: #111; border-radius: 8px; margin: 0 12px 12px; }
     .loading-state { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 40px 20px; color: #444; font-size: 14px; flex-direction: column; }
-    .progress-bar { width: calc(100% - 28px); height: 3px; background: #1e1e1e; border-radius: 3px; margin: 0 14px; overflow: hidden; }
-    .progress-fill { height: 100%; background: #4ade80; border-radius: 3px; transition: width 0.3s; }
-    .progress-text { font-size: 11px; color: #555; padding: 4px 14px 8px; text-align: center; }
+    .progress-wrap { padding: 8px 14px 12px; }
+    .progress-bar { height: 3px; background: #1e1e1e; border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; background: #4ade80; border-radius: 3px; transition: width 0.4s; width: 0%; }
+    .progress-text { font-size: 11px; color: #555; margin-top: 6px; text-align: center; }
     .dots { display: flex; gap: 4px; }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: blink 1.2s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
@@ -81,6 +79,7 @@
     .error-state { margin: 12px; padding: 12px 14px; background: #1a1010; border: 0.5px solid #3a1e1e; border-radius: 12px; color: #f87171; font-size: 13px; line-height: 1.5; }
     .refresh-btn { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 0 12px 14px; padding: 10px; background: transparent; border: 0.5px solid #222; border-radius: 10px; color: #555; font-size: 13px; cursor: pointer; width: calc(100% - 24px); }
     .refresh-btn:active { border-color: #4ade80; color: #4ade80; }
+    .scan-info { margin: 0 12px 10px; padding: 10px 14px; background: #1a1a2a; border: 0.5px solid #333; border-radius: 10px; font-size: 12px; color: #666; line-height: 1.6; }
   </style>
 </head>
 <body>
@@ -109,29 +108,33 @@
       <div class="stat-sub">уникальных</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Gargoyle NFT</div>
+      <div class="stat-label">Найдено</div>
       <div class="stat-value" id="stat-total">—</div>
-      <div class="stat-sub">найдено</div>
+      <div class="stat-sub">Gargoyle</div>
     </div>
+  </div>
+  <div id="holders-progress" class="progress-wrap" style="display:none;">
+    <div class="progress-bar"><div class="progress-fill" id="h-progress-fill"></div></div>
+    <div class="progress-text" id="h-progress-text">Сканируем...</div>
   </div>
   <div class="section-label">Рейтинг держателей</div>
   <div id="holders-list">
-    <div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Загружаем...</span></div>
+    <div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Сканируем коллекцию...</span></div>
   </div>
-  <button class="refresh-btn" onclick="startLoad()">↻ Обновить</button>
+  <button class="refresh-btn" onclick="startScan(true)">↻ Полный пересканировать</button>
 </div>
 
 <!-- GALLERY -->
 <div id="panel-gallery" class="panel">
-  <div style="padding:8px 14px 4px;font-size:11px;color:#555;">Нажмите на NFT → откроется в Telegram · <span style="color:#4ade80;">●</span> владелец загружен</div>
-  <div id="gallery-progress" style="display:none;">
-    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-    <div class="progress-text" id="progress-text">Загружаем владельцев...</div>
+  <div style="padding:8px 14px 4px;font-size:11px;color:#555;">Нажмите на NFT → откроется в Telegram</div>
+  <div id="gallery-progress" class="progress-wrap" style="display:none;">
+    <div class="progress-bar"><div class="progress-fill" id="g-progress-fill"></div></div>
+    <div class="progress-text" id="g-progress-text">Сканируем...</div>
   </div>
   <div id="gallery-grid" class="gallery-grid">
     <div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Загружаем...</span></div>
   </div>
-  <button class="refresh-btn" onclick="startLoad()">↻ Обновить</button>
+  <button class="refresh-btn" onclick="startScan(true)">↻ Обновить</button>
 </div>
 
 <!-- PRICE -->
@@ -185,16 +188,19 @@
   const WORKER = 'https://test.aatkkj.workers.dev';
   const GOY = 'EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa';
   const TONAPI = 'https://tonapi.io/v2';
+  const TOTAL_RAREBIRD = 14971;
+  const BATCH = 50; // запросов за раз
   const TABS = ['holders','gallery','price','info'];
   const COLORS = [
     ['#1e2a1e','#4ade80'],['#1e1e2a','#818cf8'],['#2a1e1e','#f87171'],
     ['#2a1e00','#fbbf24'],['#1e2a2a','#22d3ee'],['#2a1e2a','#e879f9'],
   ];
+  const CACHE_KEY = 'gargoyle_cache_v1';
+  const CACHE_TS_KEY = 'gargoyle_cache_ts';
+  const CACHE_TTL = 60 * 60 * 1000; // 1 час
 
-  // Кэш владельцев
-  const ownerCache = {};
-  // Все NFT
-  let allNFTs = [];
+  let gargoyles = []; // все найденные Gargoyle
+  let scanning = false;
 
   function switchTab(name) {
     document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', TABS[i]===name));
@@ -204,136 +210,90 @@
 
   function rankCls(i) { return i===0?'gold':i===1?'silver':i===2?'bronze':''; }
   function rankSym(i) { return i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1; }
-
-  // Загружаем список Gargoyle со всех страниц
-  async function fetchAllNFTs() {
-    const all = [];
-    let page = 1;
-    while (true) {
-      try {
-        const res = await fetch(`${WORKER}?action=list&page=${page}`);
-        const data = await res.json();
-        const items = data.items || [];
-        if (!items.length) break;
-        all.push(...items);
-        if (!data.hasMore || items.length < 5) break;
-        page++;
-        await sleep(200);
-      } catch(e) { break; }
-    }
-    return all;
-  }
-
-  // Загружаем данные одного NFT включая владельца
-  async function fetchNFT(num) {
-    if (ownerCache[num]) return ownerCache[num];
-    try {
-      const res = await fetch(`${WORKER}?num=${num}`);
-      const data = await res.json();
-      ownerCache[num] = data;
-      return data;
-    } catch(e) { return { num, owner: '', image: '' }; }
-  }
-
   function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-  // Рендер галереи — сначала без владельцев, потом обновляем
-  function renderGalleryItems(items) {
+  // Загружаем кэш
+  function loadCache() {
+    try {
+      const ts = parseInt(localStorage.getItem(CACHE_TS_KEY) || '0');
+      if (Date.now() - ts > CACHE_TTL) return null;
+      const data = localStorage.getItem(CACHE_KEY);
+      return data ? JSON.parse(data) : null;
+    } catch(e) { return null; }
+  }
+
+  function saveCache(data) {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      localStorage.setItem(CACHE_TS_KEY, String(Date.now()));
+    } catch(e) {}
+  }
+
+  // Сканируем батч через воркер
+  async function scanBatch(from, to) {
+    try {
+      const res = await fetch(`${WORKER}?action=scan&from=${from}&to=${to}`);
+      const data = await res.json();
+      return data.gargoyles || [];
+    } catch(e) { return []; }
+  }
+
+  function renderGallery() {
     const grid = document.getElementById('gallery-grid');
-    if (!items.length) {
-      grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1;">Нет данных</div>';
+    if (!gargoyles.length) {
+      grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1;">Gargoyle не найдены</div>';
       return;
     }
-
-    grid.innerHTML = items.map(item => {
+    const sorted = [...gargoyles].sort((a,b) => parseInt(a.num)-parseInt(b.num));
+    grid.innerHTML = sorted.map(item => {
       const link = `https://t.me/nft/RareBird-${item.num}`;
-      const img = item.image || ownerCache[item.num]?.image || '';
-      const owner = ownerCache[item.num]?.owner || '';
-      const imgHtml = img
-        ? `<img class="gallery-img" id="gimg-${item.num}" src="${img}" loading="lazy" onerror="this.style.display='none'">`
+      const imgHtml = item.image
+        ? `<img class="gallery-img" src="${item.image}" loading="lazy" onerror="this.style.display='none'">`
         : `<div class="gallery-placeholder">🗿</div>`;
-      return `<a class="gallery-item" href="${link}" target="_blank" id="gitem-${item.num}">
+      return `<a class="gallery-item" href="${link}" target="_blank">
         ${imgHtml}
+        ${item.owner ? `<div class="gallery-owner">${item.owner.split(' ')[0]}</div>` : ''}
         <div class="gallery-num">#${item.num}</div>
-        ${owner ? `<div class="gallery-owner">${owner.split(' ')[0]}</div>` : `<div class="gallery-loading" id="gload-${item.num}"></div>`}
       </a>`;
     }).join('');
   }
 
-  // Обновляем карточку в галерее когда загрузился владелец
-  function updateGalleryItem(num, data) {
-    const item = document.getElementById(`gitem-${num}`);
-    if (!item) return;
-
-    // Обновляем картинку если не было
-    const existImg = item.querySelector('.gallery-img');
-    if (!existImg && data.image) {
-      const placeholder = item.querySelector('.gallery-placeholder');
-      if (placeholder) {
-        const img = document.createElement('img');
-        img.className = 'gallery-img';
-        img.src = data.image;
-        img.loading = 'lazy';
-        item.insertBefore(img, placeholder);
-        placeholder.remove();
-      }
-    }
-
-    // Убираем лоадер
-    const loader = document.getElementById(`gload-${num}`);
-    if (loader) loader.remove();
-
-    // Добавляем владельца
-    if (data.owner) {
-      const existing = item.querySelector('.gallery-owner');
-      if (!existing) {
-        const ownerEl = document.createElement('div');
-        ownerEl.className = 'gallery-owner';
-        ownerEl.textContent = data.owner.split(' ')[0];
-        item.appendChild(ownerEl);
-      }
-    }
-  }
-
-  // Рендер холдеров из кэша
-  function renderHolders(items) {
+  function renderHolders() {
     const ownerMap = {};
     const ownerNFTs = {};
-
-    items.forEach(item => {
-      const data = ownerCache[item.num];
-      const owner = data?.owner || '';
-      if (!owner) return;
-      ownerMap[owner] = (ownerMap[owner] || 0) + 1;
-      if (!ownerNFTs[owner]) ownerNFTs[owner] = [];
-      ownerNFTs[owner].push({ num: item.num, image: data?.image || item.image || '' });
+    gargoyles.forEach(item => {
+      if (!item.owner) return;
+      ownerMap[item.owner] = (ownerMap[item.owner]||0)+1;
+      if (!ownerNFTs[item.owner]) ownerNFTs[item.owner] = [];
+      ownerNFTs[item.owner].push(item);
     });
 
-    const sorted = Object.entries(ownerMap).sort((a,b) => b[1]-a[1]);
-    const total = items.length;
+    const sorted = Object.entries(ownerMap).sort((a,b)=>b[1]-a[1]);
+    const total = gargoyles.length;
 
     document.getElementById('stat-holders').textContent = sorted.length || '—';
+    document.getElementById('stat-total').textContent = gargoyles.length;
+    document.getElementById('header-sub').textContent = `${gargoyles.length} Gargoyle · GOY Token`;
 
     if (!sorted.length) {
       document.getElementById('holders-list').innerHTML =
-        '<div style="padding:20px 14px;color:#555;font-size:13px;text-align:center;">Загружаем данные о владельцах...<br>Вернитесь через минуту</div>';
+        '<div style="padding:20px;color:#555;font-size:13px;text-align:center;">Ещё сканируем...<br>Владельцы появятся скоро</div>';
       return;
     }
 
-    document.getElementById('holders-list').innerHTML = sorted.slice(0,50).map(([owner, count], i) => {
+    document.getElementById('holders-list').innerHTML = sorted.slice(0,50).map(([owner,count],i) => {
       const pct = ((count/total)*100).toFixed(1);
       const [bg,fg] = COLORS[i%COLORS.length];
       const badge = count>=5?'<span class="badge badge-whale">whale</span>':count>=2?'<span class="badge badge-og">OG</span>':'';
-      const nfts = (ownerNFTs[owner]||[]).slice(0,5).map(n =>
+      const chips = (ownerNFTs[owner]||[]).slice(0,5).map(n =>
         `<a class="nft-chip" href="https://t.me/nft/RareBird-${n.num}" target="_blank" onclick="event.stopPropagation()">🗿 #${n.num}</a>`
       ).join('');
-
       return `<div class="holder-row">
         <div class="rank ${rankCls(i)}">${rankSym(i)}</div>
-        <div class="holder-avatar-placeholder" style="background:${bg};color:${fg};">${owner.slice(0,2)}</div>
+        <div class="holder-avatar" style="background:${bg};color:${fg};">${owner.slice(0,2)}</div>
         <div class="holder-info">
           <div class="holder-name">${owner}${badge}</div>
-          <div class="holder-nfts">${nfts}</div>
+          <div class="holder-nfts">${chips}</div>
         </div>
         <div class="holder-right">
           <div class="holder-count">${count}</div>
@@ -343,58 +303,63 @@
     }).join('');
   }
 
-  async function startLoad() {
-    // Сброс
-    document.getElementById('holders-list').innerHTML = '<div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Загружаем список...</span></div>';
-    document.getElementById('gallery-grid').innerHTML = '<div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Загружаем...</span></div>';
-    document.getElementById('stat-holders').textContent = '—';
-    document.getElementById('stat-total').textContent = '—';
+  async function startScan(force = false) {
+    if (scanning) return;
 
-    // Шаг 1: получаем список всех Gargoyle
-    allNFTs = await fetchAllNFTs();
-
-    if (!allNFTs.length) {
-      document.getElementById('holders-list').innerHTML = '<div class="error-state">Не удалось загрузить список NFT</div>';
-      document.getElementById('gallery-grid').innerHTML = '<div class="error-state" style="grid-column:1/-1;">Ошибка загрузки</div>';
-      return;
-    }
-
-    document.getElementById('stat-total').textContent = allNFTs.length;
-    document.getElementById('header-sub').textContent = `${allNFTs.length} Gargoyle · GOY Token`;
-
-    // Шаг 2: рендерим галерею сразу (без владельцев)
-    renderGalleryItems(allNFTs);
-
-    // Показываем прогресс-бар
-    const progressBar = document.getElementById('gallery-progress');
-    progressBar.style.display = 'block';
-
-    // Шаг 3: загружаем владельцев параллельно батчами
-    const BATCH = 5; // по 5 одновременно чтобы не перегружать
-    let loaded = 0;
-    const total = allNFTs.length;
-
-    for (let i = 0; i < allNFTs.length; i += BATCH) {
-      const batch = allNFTs.slice(i, i + BATCH);
-      await Promise.all(batch.map(async item => {
-        const data = await fetchNFT(item.num);
-        updateGalleryItem(item.num, data);
-        loaded++;
-        const pct = Math.round((loaded/total)*100);
-        document.getElementById('progress-fill').style.width = pct + '%';
-        document.getElementById('progress-text').textContent = `Загружаем владельцев: ${loaded}/${total}`;
-      }));
-      // Обновляем холдеров каждые 20 загрузок
-      if (loaded % 20 === 0 || loaded === total) {
-        renderHolders(allNFTs);
+    // Проверяем кэш
+    if (!force) {
+      const cached = loadCache();
+      if (cached && cached.length) {
+        gargoyles = cached;
+        renderGallery();
+        renderHolders();
+        return;
       }
-      await sleep(100);
     }
 
-    // Финальный рендер
-    renderHolders(allNFTs);
-    progressBar.style.display = 'none';
-    document.getElementById('progress-text').textContent = '';
+    scanning = true;
+    gargoyles = [];
+
+    // Показываем прогресс
+    document.getElementById('holders-progress').style.display = 'block';
+    document.getElementById('gallery-progress').style.display = 'block';
+    document.getElementById('holders-list').innerHTML =
+      '<div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Сканируем...</span></div>';
+    document.getElementById('gallery-grid').innerHTML =
+      '<div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Сканируем...</span></div>';
+
+    let scanned = 0;
+
+    for (let from = 1; from <= TOTAL_RAREBIRD; from += BATCH) {
+      const to = Math.min(from + BATCH - 1, TOTAL_RAREBIRD);
+      const found = await scanBatch(from, to);
+
+      if (found.length) {
+        gargoyles.push(...found);
+        gargoyles.sort((a,b) => parseInt(a.num)-parseInt(b.num));
+        renderGallery();
+        renderHolders();
+      }
+
+      scanned += (to - from + 1);
+      const pct = Math.round((scanned / TOTAL_RAREBIRD) * 100);
+      const progressText = `Просканировано: ${scanned}/${TOTAL_RAREBIRD} · Найдено: ${gargoyles.length} Gargoyle`;
+
+      document.getElementById('h-progress-fill').style.width = pct + '%';
+      document.getElementById('h-progress-text').textContent = progressText;
+      document.getElementById('g-progress-fill').style.width = pct + '%';
+      document.getElementById('g-progress-text').textContent = progressText;
+
+      await sleep(50);
+    }
+
+    // Готово
+    scanning = false;
+    document.getElementById('holders-progress').style.display = 'none';
+    document.getElementById('gallery-progress').style.display = 'none';
+    saveCache(gargoyles);
+    renderGallery();
+    renderHolders();
   }
 
   async function loadPrice() {
@@ -418,7 +383,7 @@
     document.getElementById('goy-updated').textContent = now.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
   }
 
-  startLoad();
+  startScan();
   loadPrice();
   setInterval(loadPrice, 30000);
 </script>
