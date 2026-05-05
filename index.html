@@ -5,81 +5,378 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Gargoyle Club</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #080b10;
+      --bg2: #0f1318;
+      --bg3: #161c24;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.12);
+      --accent: #39e07a;
+      --accent2: #1aaa52;
+      --accent-dim: rgba(57,224,122,0.12);
+      --gold: #f5b73d;
+      --silver: #9eafc2;
+      --bronze: #c47d3e;
+      --text: #f0f4f8;
+      --text2: #7a8a9a;
+      --text3: #3d4e5e;
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { background: #0a0a0a; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; padding-bottom: 80px; }
-    .header { background: #111; border-bottom: 0.5px solid #222; padding: 14px 16px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
-    .header-icon { width: 42px; height: 42px; border-radius: 50%; background: #1a1a1a; border: 0.5px solid #333; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-    .header-title { font-size: 16px; font-weight: 600; }
-    .header-sub { font-size: 11px; color: #555; margin-top: 2px; }
-    .tabs { display: flex; background: #111; border-bottom: 0.5px solid #222; position: sticky; top: 70px; z-index: 9; }
-    .tab { flex: 1; padding: 12px 6px; text-align: center; font-size: 12px; color: #555; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; user-select: none; }
-    .tab.active { color: #4ade80; border-bottom-color: #4ade80; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 70px;
+      overscroll-behavior: none;
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .header-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1a2a1a, #0d1a0d);
+      border: 1px solid var(--accent-dim);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(57,224,122,0.15);
+    }
+    .header-title { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
+    .header-sub { font-size: 11px; color: var(--text2); margin-top: 1px; font-family: 'Space Mono', monospace; }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 64px;
+      z-index: 99;
+    }
+    .tab {
+      flex: 1;
+      padding: 11px 4px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text3);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      user-select: none;
+    }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
     .panel { display: none; }
     .panel.active { display: block; }
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 12px; }
-    .stat-card { background: #161616; border: 0.5px solid #222; border-radius: 12px; padding: 12px 14px; }
-    .stat-label { font-size: 10px; color: #555; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .stat-value { font-size: 22px; font-weight: 600; color: #fff; }
-    .stat-sub { font-size: 10px; color: #4ade80; margin-top: 3px; }
-    .section-label { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 14px 8px; }
-    .holder-row { display: flex; align-items: flex-start; gap: 10px; padding: 11px 14px; border-bottom: 0.5px solid #181818; }
-    .rank { font-size: 12px; color: #444; width: 20px; text-align: center; flex-shrink: 0; padding-top: 10px; }
-    .rank.gold { color: #fbbf24; } .rank.silver { color: #9ca3af; } .rank.bronze { color: #cd7f32; }
-    .holder-avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
-    .holder-info { flex: 1; min-width: 0; }
-    .holder-name { font-size: 14px; color: #fff; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .holder-nfts { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
-    .nft-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; padding: 3px 8px; background: #1a2a3a; color: #60a5fa; border-radius: 20px; text-decoration: none; }
-    .holder-right { text-align: right; flex-shrink: 0; padding-top: 2px; }
-    .holder-count { font-size: 18px; font-weight: 600; color: #fff; }
-    .holder-pct { font-size: 10px; color: #555; margin-top: 2px; }
-    .badge { font-size: 10px; padding: 2px 6px; border-radius: 20px; font-weight: 500; margin-left: 4px; vertical-align: middle; }
-    .badge-whale { background: #2a1e00; color: #fbbf24; }
-    .badge-og { background: #1e2a1e; color: #4ade80; }
-    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; padding: 3px; }
-    .gallery-item { aspect-ratio: 1; background: #161616; border-radius: 8px; overflow: hidden; cursor: pointer; position: relative; border: 0.5px solid #222; text-decoration: none; display: block; }
+
+    /* STAT CARDS */
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .stat-label {
+      font-size: 9px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Space Mono', monospace;
+      margin-bottom: 6px;
+    }
+    .stat-value { font-size: 26px; font-weight: 600; color: var(--text); letter-spacing: -1px; }
+    .stat-sub { font-size: 10px; color: var(--accent); margin-top: 3px; }
+
+    /* PROGRESS */
+    .progress-wrap { padding: 0 12px 10px; }
+    .progress-bar { height: 2px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 2px; transition: width 0.5s ease; width: 0%; }
+    .progress-text { font-size: 10px; color: var(--text3); margin-top: 5px; font-family: 'Space Mono', monospace; }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-size: 9px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Space Mono', monospace;
+      padding: 4px 16px 8px;
+    }
+
+    /* HOLDER ROW */
+    .holders-container { overflow: hidden; }
+    .holder-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .holder-row:active { background: var(--bg2); }
+
+    .rank-badge {
+      font-size: 13px;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+    }
+    .rank-badge.gold { color: var(--gold); }
+    .rank-badge.silver { color: var(--silver); }
+    .rank-badge.bronze { color: var(--bronze); }
+    .rank-badge.other { color: var(--text3); font-size: 11px; }
+
+    .holder-avatar {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .holder-info { flex: 1; min-width: 0; overflow: hidden; }
+    .holder-name {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .holder-nfts {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 4px;
+      margin-top: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    .holder-nfts::-webkit-scrollbar { display: none; }
+    .nft-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      padding: 3px 8px;
+      background: rgba(57,224,122,0.08);
+      color: var(--accent);
+      border: 1px solid rgba(57,224,122,0.2);
+      border-radius: 20px;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-family: 'Space Mono', monospace;
+      transition: background 0.15s;
+    }
+    .nft-chip:active { background: rgba(57,224,122,0.2); }
+
+    .holder-right { text-align: right; flex-shrink: 0; }
+    .holder-count {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      letter-spacing: -1px;
+    }
+    .holder-pct { font-size: 10px; color: var(--text3); margin-top: 2px; font-family: 'Space Mono', monospace; }
+
+    .badge {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-whale { background: rgba(245,183,61,0.15); color: var(--gold); border: 1px solid rgba(245,183,61,0.3); }
+    .badge-og { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(57,224,122,0.3); }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      padding: 2px;
+    }
+    .gallery-item {
+      aspect-ratio: 1;
+      background: var(--bg2);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      display: block;
+      transition: opacity 0.15s;
+    }
     .gallery-item:active { opacity: 0.7; }
     .gallery-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 26px; background: #1a1a1a; }
-    .gallery-num { position: absolute; bottom: 4px; left: 4px; font-size: 10px; background: rgba(0,0,0,0.75); color: #aaa; padding: 1px 5px; border-radius: 6px; }
-    .gallery-owner { position: absolute; top: 4px; left: 4px; right: 4px; font-size: 9px; background: rgba(0,0,0,0.8); color: #4ade80; padding: 2px 5px; border-radius: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .gallery-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      background: var(--bg3);
+    }
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      padding: 16px 6px 5px;
+    }
+    .gallery-num {
+      font-size: 10px;
+      color: rgba(255,255,255,0.6);
+      font-family: 'Space Mono', monospace;
+    }
+    .gallery-owner-name {
+      font-size: 9px;
+      color: var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+
+    /* PRICE */
     .price-section { padding: 12px; }
-    .price-card { background: #161616; border: 0.5px solid #222; border-radius: 14px; padding: 18px; margin-bottom: 10px; }
-    .price-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
-    .price-ticker { font-size: 12px; color: #555; margin-bottom: 4px; }
-    .price-value { font-size: 30px; font-weight: 700; }
-    .price-usd { font-size: 13px; color: #555; margin-top: 3px; }
-    .change-badge { font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
-    .change-badge.up { background: #1e2a1e; color: #4ade80; }
-    .change-badge.neutral { background: #1e1e1e; color: #666; }
-    .price-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 0.5px solid #1e1e1e; }
+    .price-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .price-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+    }
+    .price-ticker { font-size: 11px; color: var(--text3); margin-bottom: 6px; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+    .price-value { font-size: 34px; font-weight: 700; letter-spacing: -2px; font-family: 'Space Mono', monospace; }
+    .price-usd { font-size: 13px; color: var(--text2); margin-top: 4px; }
+    .price-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+    .change-badge { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; font-family: 'Space Mono', monospace; }
+    .change-badge.up { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(57,224,122,0.3); }
+    .change-badge.neutral { background: var(--bg3); color: var(--text3); }
+    .price-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
     .price-row:last-child { border-bottom: none; }
-    .price-row-label { font-size: 13px; color: #555; }
-    .price-row-val { font-size: 13px; color: #fff; }
-    .buy-btn { display: block; width: 100%; padding: 13px; background: #4ade80; color: #000; font-size: 15px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; text-align: center; text-decoration: none; margin-top: 10px; }
-    .buy-btn:active { opacity: 0.8; }
-    .info-card { background: #161616; border: 0.5px solid #222; border-radius: 14px; overflow: hidden; margin-bottom: 10px; }
-    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border-bottom: 0.5px solid #1e1e1e; }
+    .price-row-label { font-size: 12px; color: var(--text2); }
+    .price-row-val { font-size: 12px; color: var(--text); font-family: 'Space Mono', monospace; }
+    .buy-btn {
+      display: block; width: 100%; padding: 14px;
+      background: var(--accent);
+      color: #000;
+      font-size: 14px; font-weight: 700;
+      border: none; border-radius: var(--radius);
+      cursor: pointer; text-align: center; text-decoration: none;
+      margin-top: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: opacity 0.15s;
+    }
+    .buy-btn:active { opacity: 0.85; }
+
+    /* INFO */
+    .info-section { padding: 12px; }
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .info-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 13px 16px; border-bottom: 1px solid var(--border);
+    }
     .info-row:last-child { border-bottom: none; }
-    .info-row-label { font-size: 13px; color: #555; }
-    .info-row-val { font-size: 13px; color: #fff; }
-    .link-val { color: #4ade80; text-decoration: none; }
-    .contract-addr { font-family: monospace; font-size: 10px; color: #444; word-break: break-all; padding: 10px 14px; background: #111; border-radius: 8px; margin: 0 12px 12px; }
-    .loading-state { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 40px 20px; color: #444; font-size: 14px; flex-direction: column; }
-    .progress-wrap { padding: 8px 14px 12px; }
-    .progress-bar { height: 3px; background: #1e1e1e; border-radius: 3px; overflow: hidden; }
-    .progress-fill { height: 100%; background: #4ade80; border-radius: 3px; transition: width 0.4s; width: 0%; }
-    .progress-text { font-size: 11px; color: #555; margin-top: 6px; text-align: center; }
-    .dots { display: flex; gap: 4px; }
-    .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: blink 1.2s infinite; }
+    .info-row-label { font-size: 12px; color: var(--text2); }
+    .info-row-val { font-size: 12px; color: var(--text); font-family: 'Space Mono', monospace; }
+    .link-val { color: var(--accent); text-decoration: none; font-family: 'Space Mono', monospace; font-size: 11px; }
+
+    /* STATES */
+    .loading-state {
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; padding: 50px 20px; color: var(--text3);
+      font-size: 13px; flex-direction: column;
+    }
+    .dots { display: flex; gap: 5px; }
+    .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 1.4s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes blink { 0%,80%,100%{opacity:0.15} 40%{opacity:1} }
-    .error-state { margin: 12px; padding: 12px 14px; background: #1a1010; border: 0.5px solid #3a1e1e; border-radius: 12px; color: #f87171; font-size: 13px; line-height: 1.5; }
-    .refresh-btn { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 0 12px 14px; padding: 10px; background: transparent; border: 0.5px solid #222; border-radius: 10px; color: #555; font-size: 13px; cursor: pointer; width: calc(100% - 24px); }
-    .refresh-btn:active { border-color: #4ade80; color: #4ade80; }
-    .scan-info { margin: 0 12px 10px; padding: 10px 14px; background: #1a1a2a; border: 0.5px solid #333; border-radius: 10px; font-size: 12px; color: #666; line-height: 1.6; }
+    @keyframes pulse { 0%,80%,100%{opacity:0.1;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }
+
+    .refresh-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin: 8px 12px 16px;
+      padding: 11px;
+      background: transparent;
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text3);
+      font-size: 11px;
+      font-family: 'Space Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      width: calc(100% - 24px);
+      transition: all 0.2s;
+    }
+    .refresh-btn:active { border-color: var(--accent); color: var(--accent); }
+
+    .contract-addr {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: var(--text3);
+      word-break: break-all;
+      padding: 10px 14px;
+      background: var(--bg3);
+      border-radius: var(--radius-sm);
+      margin: 0 12px 12px;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
@@ -88,15 +385,15 @@
   <div class="header-icon">🗿</div>
   <div>
     <div class="header-title">Gargoyle Club</div>
-    <div class="header-sub" id="header-sub">Загружаем...</div>
+    <div class="header-sub" id="header-sub">scanning...</div>
   </div>
 </div>
 
 <div class="tabs">
   <div class="tab active" onclick="switchTab('holders')">Холдеры</div>
   <div class="tab" onclick="switchTab('gallery')">Галерея</div>
-  <div class="tab" onclick="switchTab('price')">Курс GOY</div>
-  <div class="tab" onclick="switchTab('info')">О проекте</div>
+  <div class="tab" onclick="switchTab('price')">GOY</div>
+  <div class="tab" onclick="switchTab('info')">Инфо</div>
 </div>
 
 <!-- HOLDERS -->
@@ -108,31 +405,38 @@
       <div class="stat-sub">уникальных</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Найдено</div>
+      <div class="stat-label">Gargoyle</div>
       <div class="stat-value" id="stat-total">—</div>
-      <div class="stat-sub">Gargoyle</div>
+      <div class="stat-sub">найдено</div>
     </div>
   </div>
   <div id="holders-progress" class="progress-wrap" style="display:none;">
-    <div class="progress-bar"><div class="progress-fill" id="h-progress-fill"></div></div>
-    <div class="progress-text" id="h-progress-text">Сканируем...</div>
+    <div class="progress-bar"><div class="progress-fill" id="h-fill"></div></div>
+    <div class="progress-text" id="h-text">Сканируем коллекцию...</div>
   </div>
   <div class="section-label">Рейтинг держателей</div>
-  <div id="holders-list">
-    <div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Сканируем коллекцию...</span></div>
+  <div class="holders-container">
+    <div id="holders-list">
+      <div class="loading-state">
+        <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <span>Сканируем...</span>
+      </div>
+    </div>
   </div>
-  <button class="refresh-btn" onclick="startScan(true)">↻ Полный пересканировать</button>
+  <button class="refresh-btn" onclick="startScan(true)">↻ Пересканировать</button>
 </div>
 
 <!-- GALLERY -->
 <div id="panel-gallery" class="panel">
-  <div style="padding:8px 14px 4px;font-size:11px;color:#555;">Нажмите на NFT → откроется в Telegram</div>
-  <div id="gallery-progress" class="progress-wrap" style="display:none;">
-    <div class="progress-bar"><div class="progress-fill" id="g-progress-fill"></div></div>
-    <div class="progress-text" id="g-progress-text">Сканируем...</div>
+  <div id="gallery-progress" class="progress-wrap" style="display:none;padding-top:10px;">
+    <div class="progress-bar"><div class="progress-fill" id="g-fill"></div></div>
+    <div class="progress-text" id="g-text">Сканируем...</div>
   </div>
   <div id="gallery-grid" class="gallery-grid">
-    <div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Загружаем...</span></div>
+    <div class="loading-state" style="grid-column:1/-1;">
+      <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <span>Загружаем...</span>
+    </div>
   </div>
   <button class="refresh-btn" onclick="startScan(true)">↻ Обновить</button>
 </div>
@@ -144,17 +448,17 @@
       <div class="price-header">
         <div>
           <div class="price-ticker">GOY / TON</div>
-          <div class="price-value" id="goy-price-val">0.001</div>
+          <div class="price-value" id="goy-price-val">—</div>
           <div class="price-usd" id="goy-price-usd">загружаем...</div>
         </div>
-        <div class="change-badge neutral" id="goy-change-badge">live</div>
+        <div class="change-badge neutral" id="goy-badge">···</div>
       </div>
-      <div class="price-row"><span class="price-row-label">Всего монет</span><span class="price-row-val">167 000 GOY</span></div>
+      <div class="price-row"><span class="price-row-label">Эмиссия</span><span class="price-row-val">167 000</span></div>
       <div class="price-row"><span class="price-row-label">Обновлено</span><span class="price-row-val" id="goy-updated">—</span></div>
     </div>
-    <a class="buy-btn" href="https://app.ston.fi/swap?inputCurrency=TON&outputCurrency=EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">Купить GOY на STON.fi</a>
-    <div style="height:12px;"></div>
-    <div class="section-label">Адрес контракта</div>
+    <a class="buy-btn" href="https://app.ston.fi/swap?inputCurrency=TON&outputCurrency=EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">Купить GOY</a>
+    <div style="height:14px;"></div>
+    <div class="section-label">Контракт</div>
     <div class="contract-addr">EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa</div>
     <button class="refresh-btn" onclick="loadPrice()">↻ Обновить курс</button>
   </div>
@@ -162,25 +466,25 @@
 
 <!-- INFO -->
 <div id="panel-info" class="panel">
-  <div style="padding:12px;">
+  <div class="info-section">
     <div class="info-card">
-      <div class="info-row"><span class="info-row-label">Коллекция</span><span class="info-row-val">Gargoyle (RareBird)</span></div>
-      <div class="info-row"><span class="info-row-label">Токен</span><span class="info-row-val">GOY</span></div>
-      <div class="info-row"><span class="info-row-label">Эмиссия</span><span class="info-row-val">167 000 GOY</span></div>
-      <div class="info-row"><span class="info-row-label">Сеть</span><span class="info-row-val">TON Blockchain</span></div>
+      <div class="info-row"><span class="info-row-label">Коллекция</span><span class="info-row-val">RareBird</span></div>
+      <div class="info-row"><span class="info-row-label">Модель</span><span class="info-row-val">Gargoyle</span></div>
+      <div class="info-row"><span class="info-row-label">Эмиссия GOY</span><span class="info-row-val">167 000</span></div>
+      <div class="info-row"><span class="info-row-label">Сеть</span><span class="info-row-val">TON</span></div>
     </div>
     <div class="section-label" style="padding-top:6px;">Ссылки</div>
     <div class="info-card">
-      <div class="info-row"><span class="info-row-label">Все Gargoyle</span><a class="link-val" href="https://marketapp.ws/collection/EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl/?tab=nfts&attrs=Model%7EGargoyle" target="_blank">Marketapp →</a></div>
-      <div class="info-row"><span class="info-row-label">GetGems</span><a class="link-val" href="https://getgems.io/gifts-collection?filter=%7B%22collections%22%3A%5B%22EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl%22%5D%2C%22attributes%22%3A%7B%22Model%22%3A%5B%22Gargoyle%22%5D%7D%7D" target="_blank">Открыть →</a></div>
-      <div class="info-row"><span class="info-row-label">Токен GOY</span><a class="link-val" href="https://tonscan.org/jetton/EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">Tonscan →</a></div>
-      <div class="info-row"><span class="info-row-label">Купить GOY</span><a class="link-val" href="https://app.ston.fi/swap?inputCurrency=TON&outputCurrency=EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">STON.fi →</a></div>
+      <div class="info-row"><span class="info-row-label">Marketapp</span><a class="link-val" href="https://marketapp.ws/collection/EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl/?tab=nfts&attrs=Model%7EGargoyle" target="_blank">открыть →</a></div>
+      <div class="info-row"><span class="info-row-label">GetGems</span><a class="link-val" href="https://getgems.io/gifts-collection?filter=%7B%22collections%22%3A%5B%22EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl%22%5D%2C%22attributes%22%3A%7B%22Model%22%3A%5B%22Gargoyle%22%5D%7D%7D" target="_blank">открыть →</a></div>
+      <div class="info-row"><span class="info-row-label">Tonscan</span><a class="link-val" href="https://tonscan.org/jetton/EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">открыть →</a></div>
+      <div class="info-row"><span class="info-row-label">STON.fi</span><a class="link-val" href="https://app.ston.fi/swap?inputCurrency=TON&outputCurrency=EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">купить →</a></div>
     </div>
   </div>
 </div>
 
 <script>
-  if (window.Telegram && window.Telegram.WebApp) {
+  if (window.Telegram?.WebApp) {
     window.Telegram.WebApp.ready();
     window.Telegram.WebApp.expand();
   }
@@ -188,18 +492,20 @@
   const WORKER = 'https://test.aatkkj.workers.dev';
   const GOY = 'EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa';
   const TONAPI = 'https://tonapi.io/v2';
-  const TOTAL_RAREBIRD = 14971;
-  const BATCH = 50; // запросов за раз
-  const TABS = ['holders','gallery','price','info'];
-  const COLORS = [
-    ['#1e2a1e','#4ade80'],['#1e1e2a','#818cf8'],['#2a1e1e','#f87171'],
-    ['#2a1e00','#fbbf24'],['#1e2a2a','#22d3ee'],['#2a1e2a','#e879f9'],
-  ];
-  const CACHE_KEY = 'gargoyle_cache_v1';
-  const CACHE_TS_KEY = 'gargoyle_cache_ts';
-  const CACHE_TTL = 60 * 60 * 1000; // 1 час
+  const TOTAL = 14971;
+  const BATCH = 50;
+  const CACHE_KEY = 'gclub_v3';
+  const CACHE_TS = 'gclub_ts';
+  const TTL = 3600000;
 
-  let gargoyles = []; // все найденные Gargoyle
+  const TABS = ['holders','gallery','price','info'];
+  const PALETTES = [
+    ['#0d2018','#39e07a'],['#0d1220','#818cf8'],['#200d0d','#f87171'],
+    ['#201500','#fbbf24'],['#0d1f20','#22d3ee'],['#1a0d20','#e879f9'],
+    ['#1a1200','#f59e0b'],['#001a0d','#34d399'],
+  ];
+
+  let gargoyles = [];
   let scanning = false;
 
   function switchTab(name) {
@@ -208,59 +514,55 @@
     document.getElementById('panel-'+name).classList.add('active');
   }
 
-  function rankCls(i) { return i===0?'gold':i===1?'silver':i===2?'bronze':''; }
-  function rankSym(i) { return i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1; }
-  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+  const rankSymbol = i => i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
+  const rankClass = i => i===0?'gold':i===1?'silver':i===2?'bronze':'other';
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  // Загружаем кэш
   function loadCache() {
     try {
-      const ts = parseInt(localStorage.getItem(CACHE_TS_KEY) || '0');
-      if (Date.now() - ts > CACHE_TTL) return null;
-      const data = localStorage.getItem(CACHE_KEY);
-      return data ? JSON.parse(data) : null;
-    } catch(e) { return null; }
+      const ts = +localStorage.getItem(CACHE_TS);
+      if (Date.now()-ts > TTL) return null;
+      const d = localStorage.getItem(CACHE_KEY);
+      return d ? JSON.parse(d) : null;
+    } catch { return null; }
+  }
+  function saveCache(d) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(d)); localStorage.setItem(CACHE_TS, Date.now()); } catch {}
   }
 
-  function saveCache(data) {
-    try {
-      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-      localStorage.setItem(CACHE_TS_KEY, String(Date.now()));
-    } catch(e) {}
-  }
-
-  // Сканируем батч через воркер
   async function scanBatch(from, to) {
     try {
-      const res = await fetch(`${WORKER}?action=scan&from=${from}&to=${to}`);
-      const data = await res.json();
-      return data.gargoyles || [];
-    } catch(e) { return []; }
+      const r = await fetch(`${WORKER}?action=scan&from=${from}&to=${to}`);
+      const d = await r.json();
+      return d.gargoyles || [];
+    } catch { return []; }
   }
 
   function renderGallery() {
     const grid = document.getElementById('gallery-grid');
     if (!gargoyles.length) {
-      grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1;">Gargoyle не найдены</div>';
+      grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1;"><span>Ещё не найдено...</span></div>';
       return;
     }
-    const sorted = [...gargoyles].sort((a,b) => parseInt(a.num)-parseInt(b.num));
+    const sorted = [...gargoyles].sort((a,b)=>+a.num-+b.num);
     grid.innerHTML = sorted.map(item => {
       const link = `https://t.me/nft/RareBird-${item.num}`;
-      const imgHtml = item.image
+      const img = item.image
         ? `<img class="gallery-img" src="${item.image}" loading="lazy" onerror="this.style.display='none'">`
         : `<div class="gallery-placeholder">🗿</div>`;
+      const firstName = item.owner ? item.owner.split(' ')[0] : '';
       return `<a class="gallery-item" href="${link}" target="_blank">
-        ${imgHtml}
-        ${item.owner ? `<div class="gallery-owner">${item.owner.split(' ')[0]}</div>` : ''}
-        <div class="gallery-num">#${item.num}</div>
+        ${img}
+        <div class="gallery-overlay">
+          <div class="gallery-num">#${item.num}</div>
+          ${firstName ? `<div class="gallery-owner-name">${firstName}</div>` : ''}
+        </div>
       </a>`;
     }).join('');
   }
 
   function renderHolders() {
-    const ownerMap = {};
-    const ownerNFTs = {};
+    const ownerMap = {}, ownerNFTs = {};
     gargoyles.forEach(item => {
       if (!item.owner) return;
       ownerMap[item.owner] = (ownerMap[item.owner]||0)+1;
@@ -272,27 +574,33 @@
     const total = gargoyles.length;
 
     document.getElementById('stat-holders').textContent = sorted.length || '—';
-    document.getElementById('stat-total').textContent = gargoyles.length;
-    document.getElementById('header-sub').textContent = `${gargoyles.length} Gargoyle · GOY Token`;
+    document.getElementById('stat-total').textContent = gargoyles.length || '—';
+    document.getElementById('header-sub').textContent = `${gargoyles.length} gargoyle · goy token`;
 
     if (!sorted.length) {
       document.getElementById('holders-list').innerHTML =
-        '<div style="padding:20px;color:#555;font-size:13px;text-align:center;">Ещё сканируем...<br>Владельцы появятся скоро</div>';
+        '<div style="padding:24px 16px;color:var(--text3);font-size:12px;text-align:center;font-family:Space Mono,monospace;">сканируем... вернитесь через минуту</div>';
       return;
     }
 
-    document.getElementById('holders-list').innerHTML = sorted.slice(0,50).map(([owner,count],i) => {
+    document.getElementById('holders-list').innerHTML = sorted.slice(0,60).map(([owner,count],i) => {
       const pct = ((count/total)*100).toFixed(1);
-      const [bg,fg] = COLORS[i%COLORS.length];
-      const badge = count>=5?'<span class="badge badge-whale">whale</span>':count>=2?'<span class="badge badge-og">OG</span>':'';
-      const chips = (ownerNFTs[owner]||[]).slice(0,5).map(n =>
-        `<a class="nft-chip" href="https://t.me/nft/RareBird-${n.num}" target="_blank" onclick="event.stopPropagation()">🗿 #${n.num}</a>`
+      const [bg,fg] = PALETTES[i%PALETTES.length];
+      const badge = count>=5
+        ? '<span class="badge badge-whale">whale</span>'
+        : count>=2 ? '<span class="badge badge-og">og</span>' : '';
+
+      const chips = (ownerNFTs[owner]||[]).slice(0,8).map(n =>
+        `<a class="nft-chip" href="https://t.me/nft/RareBird-${n.num}" target="_blank" onclick="event.stopPropagation()">#${n.num}</a>`
       ).join('');
+
       return `<div class="holder-row">
-        <div class="rank ${rankCls(i)}">${rankSym(i)}</div>
-        <div class="holder-avatar" style="background:${bg};color:${fg};">${owner.slice(0,2)}</div>
+        <div class="rank-badge ${rankClass(i)}">${rankSymbol(i)}</div>
+        <div class="holder-avatar" style="background:${bg};color:${fg};border-radius:12px;border:1px solid ${fg}22;">
+          ${owner.slice(0,2).toUpperCase()}
+        </div>
         <div class="holder-info">
-          <div class="holder-name">${owner}${badge}</div>
+          <div class="holder-name">${owner} ${badge}</div>
           <div class="holder-nfts">${chips}</div>
         </div>
         <div class="holder-right">
@@ -303,13 +611,20 @@
     }).join('');
   }
 
-  async function startScan(force = false) {
-    if (scanning) return;
+  function updateProgress(scanned, found) {
+    const pct = Math.round((scanned/TOTAL)*100)+'%';
+    const txt = `${scanned}/${TOTAL} · найдено: ${found}`;
+    document.getElementById('h-fill').style.width = pct;
+    document.getElementById('h-text').textContent = txt;
+    document.getElementById('g-fill').style.width = pct;
+    document.getElementById('g-text').textContent = txt;
+  }
 
-    // Проверяем кэш
+  async function startScan(force=false) {
+    if (scanning) return;
     if (!force) {
       const cached = loadCache();
-      if (cached && cached.length) {
+      if (cached?.length) {
         gargoyles = cached;
         renderGallery();
         renderHolders();
@@ -319,44 +634,28 @@
 
     scanning = true;
     gargoyles = [];
-
-    // Показываем прогресс
-    document.getElementById('holders-progress').style.display = 'block';
-    document.getElementById('gallery-progress').style.display = 'block';
-    document.getElementById('holders-list').innerHTML =
-      '<div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Сканируем...</span></div>';
-    document.getElementById('gallery-grid').innerHTML =
-      '<div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Сканируем...</span></div>';
+    document.getElementById('holders-progress').style.display='block';
+    document.getElementById('gallery-progress').style.display='block';
+    document.getElementById('holders-list').innerHTML='<div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Сканируем...</span></div>';
+    document.getElementById('gallery-grid').innerHTML='<div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Сканируем...</span></div>';
 
     let scanned = 0;
-
-    for (let from = 1; from <= TOTAL_RAREBIRD; from += BATCH) {
-      const to = Math.min(from + BATCH - 1, TOTAL_RAREBIRD);
+    for (let from=1; from<=TOTAL; from+=BATCH) {
+      const to = Math.min(from+BATCH-1, TOTAL);
       const found = await scanBatch(from, to);
-
       if (found.length) {
         gargoyles.push(...found);
-        gargoyles.sort((a,b) => parseInt(a.num)-parseInt(b.num));
         renderGallery();
         renderHolders();
       }
-
-      scanned += (to - from + 1);
-      const pct = Math.round((scanned / TOTAL_RAREBIRD) * 100);
-      const progressText = `Просканировано: ${scanned}/${TOTAL_RAREBIRD} · Найдено: ${gargoyles.length} Gargoyle`;
-
-      document.getElementById('h-progress-fill').style.width = pct + '%';
-      document.getElementById('h-progress-text').textContent = progressText;
-      document.getElementById('g-progress-fill').style.width = pct + '%';
-      document.getElementById('g-progress-text').textContent = progressText;
-
+      scanned += (to-from+1);
+      updateProgress(scanned, gargoyles.length);
       await sleep(50);
     }
 
-    // Готово
     scanning = false;
-    document.getElementById('holders-progress').style.display = 'none';
-    document.getElementById('gallery-progress').style.display = 'none';
+    document.getElementById('holders-progress').style.display='none';
+    document.getElementById('gallery-progress').style.display='none';
     saveCache(gargoyles);
     renderGallery();
     renderHolders();
@@ -372,15 +671,13 @@
         const usd = parseFloat(rate.prices.USD||0);
         document.getElementById('goy-price-val').textContent = ton>0?ton.toFixed(6):'0.001';
         document.getElementById('goy-price-usd').textContent = usd>0?`≈ $${usd.toFixed(6)}`:'';
-        document.getElementById('goy-change-badge').textContent = 'live';
-        document.getElementById('goy-change-badge').className = 'change-badge up';
+        document.getElementById('goy-badge').textContent = 'live';
+        document.getElementById('goy-badge').className = 'change-badge up';
       }
-    } catch(e) {
-      document.getElementById('goy-change-badge').textContent = 'офлайн';
-      document.getElementById('goy-change-badge').className = 'change-badge neutral';
+    } catch {
+      document.getElementById('goy-badge').textContent = 'offline';
     }
-    const now = new Date();
-    document.getElementById('goy-updated').textContent = now.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('goy-updated').textContent = new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
   }
 
   startScan();
