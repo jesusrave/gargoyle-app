@@ -1,233 +1,134 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Gargoyle Club</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #080b10;
-      --bg2: #0f1318;
-      --bg3: #161c24;
-      --border: rgba(255,255,255,0.07);
-      --accent: #39e07a;
-      --accent2: #1aaa52;
-      --gold: #f5b73d;
-      --silver: #9eafc2;
-      --bronze: #c47d3e;
-      --text: #f0f4f8;
-      --text2: #7a8a9a;
-      --text3: #3d4e5e;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      padding-bottom: 70px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Gargoyle Club</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0d12; color: #f0f4f8; font-family: -apple-system, sans-serif; padding-bottom: 60px; }
 
-    /* HEADER */
-    .header {
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .hicon {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: #0d1a0d; border: 1px solid rgba(57,224,122,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; flex-shrink: 0;
-    }
-    .htitle { font-size: 15px; font-weight: 600; }
-    .hsub { font-size: 11px; color: var(--text2); margin-top: 1px; font-family: 'Space Mono', monospace; }
+.header { background: #0a0d12; border-bottom: 1px solid #1e2530; padding: 12px 16px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; }
+.hicon { width: 40px; height: 40px; border-radius: 10px; background: #0d1a0d; border: 1px solid #2a4a2a; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.htitle { font-size: 15px; font-weight: 600; }
+.hsub { font-size: 11px; color: #5a6a7a; margin-top: 2px; }
 
-    /* TABS */
-    .tabs {
-      display: flex;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      position: sticky; top: 64px; z-index: 99;
-    }
-    .tab {
-      flex: 1; padding: 11px 4px; text-align: center;
-      font-size: 11px; font-weight: 500; color: var(--text3);
-      cursor: pointer; border-bottom: 2px solid transparent;
-      text-transform: uppercase; letter-spacing: 0.3px;
-      user-select: none;
-    }
-    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-    .panel { display: none; }
-    .panel.active { display: block; }
+.tabs { display: flex; background: #0a0d12; border-bottom: 1px solid #1e2530; position: sticky; top: 64px; z-index: 99; }
+.tab { flex: 1; padding: 12px 4px; text-align: center; font-size: 12px; color: #4a5a6a; cursor: pointer; border-bottom: 2px solid transparent; }
+.tab.active { color: #39e07a; border-bottom-color: #39e07a; }
 
-    /* STAT CARDS */
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
-    .stat-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 14px; padding: 14px; position: relative; overflow: hidden;
-    }
-    .stat-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-    }
-    .slabel { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; font-family: 'Space Mono', monospace; margin-bottom: 6px; }
-    .sval { font-size: 26px; font-weight: 600; letter-spacing: -1px; }
-    .ssub { font-size: 10px; color: var(--accent); margin-top: 3px; }
+.panel { display: none; }
+.panel.active { display: block; }
 
-    /* PROGRESS */
-    .prog-wrap { padding: 0 12px 10px; }
-    .prog-bar { height: 2px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
-    .prog-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 2px; transition: width 0.4s; width: 0%; }
-    .prog-text { font-size: 10px; color: var(--text3); margin-top: 5px; font-family: 'Space Mono', monospace; }
+/* STATS */
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+.scard { background: #0f1318; border: 1px solid #1e2530; border-radius: 12px; padding: 14px; }
+.sl { font-size: 10px; color: #4a5a6a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.sv { font-size: 24px; font-weight: 600; }
+.ss { font-size: 10px; color: #39e07a; margin-top: 3px; }
 
-    .sec-label { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; font-family: 'Space Mono', monospace; padding: 4px 16px 8px; }
+/* PROGRESS */
+.prog { padding: 0 12px 10px; display: none; }
+.progbar { height: 2px; background: #1e2530; border-radius: 2px; }
+.progfill { height: 100%; background: #39e07a; border-radius: 2px; width: 0%; transition: width 0.3s; }
+.progtxt { font-size: 10px; color: #4a5a6a; margin-top: 4px; }
 
-    /* HOLDER ROWS - строго блочные */
-    .holder-list { display: block; width: 100%; }
-    .holder-row {
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-      width: 100%;
-    }
-    .h-rank {
-      font-size: 12px; font-family: 'Space Mono', monospace; font-weight: 700;
-      flex-shrink: 0; width: 22px; padding-top: 12px; text-align: center;
-    }
-    .h-rank.gold { color: var(--gold); }
-    .h-rank.silver { color: var(--silver); }
-    .h-rank.bronze { color: var(--bronze); }
-    .h-rank.other { color: var(--text3); font-size: 10px; }
-    .h-avatar {
-      width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700;
-    }
-    .h-body { flex: 1; min-width: 0; }
-    .h-name {
-      font-size: 14px; font-weight: 500; color: var(--text);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      margin-bottom: 6px;
-    }
-    .h-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-    .h-chip {
-      font-size: 10px; padding: 3px 9px;
-      background: rgba(57,224,122,0.08);
-      color: var(--accent);
-      border: 1px solid rgba(57,224,122,0.2);
-      border-radius: 20px; text-decoration: none;
-      font-family: 'Space Mono', monospace;
-      white-space: nowrap; display: inline-block;
-    }
-    .h-right { flex-shrink: 0; text-align: right; padding-top: 2px; }
-    .h-count { font-size: 20px; font-weight: 700; font-family: 'Space Mono', monospace; letter-spacing: -1px; }
-    .h-pct { font-size: 10px; color: var(--text3); font-family: 'Space Mono', monospace; margin-top: 2px; }
-    .badge {
-      display: inline-block; font-size: 9px; padding: 2px 6px;
-      border-radius: 20px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.5px; margin-left: 5px; vertical-align: middle;
-    }
-    .badge-whale { background: rgba(245,183,61,0.15); color: var(--gold); border: 1px solid rgba(245,183,61,0.3); }
-    .badge-og { background: rgba(57,224,122,0.12); color: var(--accent); border: 1px solid rgba(57,224,122,0.3); }
+.seclabel { font-size: 10px; color: #4a5a6a; text-transform: uppercase; letter-spacing: 1px; padding: 8px 16px 6px; }
 
-    /* GALLERY - строго 3 колонки */
-    .gallery-wrap { padding: 4px; }
-    .gallery-row { display: flex; flex-direction: row; gap: 4px; margin-bottom: 4px; }
-    .gallery-cell {
-      width: calc(33.333% - 3px); padding-bottom: calc(33.333% - 3px);
-      background: var(--bg3); border-radius: 10px;
-      overflow: hidden; position: relative;
-      text-decoration: none; display: block;
-      flex-shrink: 0; height: 0;
-    }
-    .gallery-cell:active { opacity: 0.7; }
-    .gallery-cell img {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .gallery-cell .no-img {
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px;
-    }
-    .gallery-info {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.85));
-      padding: 20px 6px 5px;
-    }
-    .gallery-num { font-size: 10px; color: rgba(255,255,255,0.55); font-family: 'Space Mono', monospace; }
-    .gallery-owner { font-size: 9px; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* ===== HOLDERS — вертикальный список ===== */
+#holders-list { display: block; width: 100%; }
 
-    /* PRICE */
-    .price-wrap { padding: 12px; }
-    .price-card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 14px; padding: 20px; margin-bottom: 10px;
-      position: relative; overflow: hidden;
-    }
-    .price-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
-    }
-    .p-ticker { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; font-family: 'Space Mono', monospace; margin-bottom: 6px; }
-    .p-val { font-size: 32px; font-weight: 700; letter-spacing: -2px; font-family: 'Space Mono', monospace; }
-    .p-usd { font-size: 13px; color: var(--text2); margin-top: 4px; }
-    .p-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
-    .p-badge { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; font-family: 'Space Mono', monospace; }
-    .p-badge.up { background: rgba(57,224,122,0.12); color: var(--accent); border: 1px solid rgba(57,224,122,0.3); }
-    .p-badge.off { background: var(--bg3); color: var(--text3); }
-    .p-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); }
-    .p-row:last-child { border-bottom: none; }
-    .p-rl { font-size: 12px; color: var(--text2); }
-    .p-rv { font-size: 12px; font-family: 'Space Mono', monospace; }
-    .buy-btn {
-      display: block; width: 100%; padding: 14px;
-      background: var(--accent); color: #000;
-      font-size: 13px; font-weight: 700; border: none;
-      border-radius: 14px; cursor: pointer; text-align: center;
-      text-decoration: none; margin-top: 10px;
-      text-transform: uppercase; letter-spacing: 1px;
-    }
+.hrow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #1a2028;
+  width: 100%;
+}
 
-    /* INFO */
-    .info-wrap { padding: 12px; }
-    .info-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 10px; }
-    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; border-bottom: 1px solid var(--border); }
-    .info-row:last-child { border-bottom: none; }
-    .ir-l { font-size: 12px; color: var(--text2); }
-    .ir-r { font-size: 12px; font-family: 'Space Mono', monospace; }
-    .ir-link { color: var(--accent); text-decoration: none; font-size: 11px; font-family: 'Space Mono', monospace; }
-    .addr { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text3); word-break: break-all; padding: 10px 14px; background: var(--bg3); border-radius: 10px; margin: 0 0 10px; line-height: 1.6; }
+.hrank { font-size: 12px; font-weight: 700; flex-shrink: 0; width: 24px; text-align: center; padding-top: 10px; color: #4a5a6a; }
+.hrank.g { color: #f5b73d; }
+.hrank.s { color: #9eafc2; }
+.hrank.b { color: #c47d3e; }
 
-    /* STATES */
-    .empty { padding: 40px 20px; text-align: center; color: var(--text3); font-size: 12px; font-family: 'Space Mono', monospace; }
-    .dots { display: flex; gap: 5px; justify-content: center; margin-bottom: 10px; }
-    .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 1.4s infinite; }
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes pulse { 0%,80%,100%{opacity:0.1;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }
-    .refresh-btn {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin: 8px 12px 16px; padding: 11px;
-      background: transparent; border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px; color: var(--text3);
-      font-size: 10px; font-family: 'Space Mono', monospace;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      cursor: pointer; width: calc(100% - 24px);
-    }
-  </style>
+.havatar { width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+
+.hbody { flex: 1; min-width: 0; }
+.hname { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
+.hchips { display: flex; flex-wrap: wrap; gap: 4px; }
+.hchip { font-size: 10px; padding: 3px 8px; background: rgba(57,224,122,0.08); color: #39e07a; border: 1px solid rgba(57,224,122,0.2); border-radius: 20px; text-decoration: none; flex-shrink: 0; }
+
+.hright { flex-shrink: 0; text-align: right; }
+.hcount { font-size: 20px; font-weight: 700; }
+.hpct { font-size: 10px; color: #4a5a6a; margin-top: 2px; }
+
+.badge { display: inline-block; font-size: 9px; padding: 2px 6px; border-radius: 20px; font-weight: 600; text-transform: uppercase; margin-left: 4px; vertical-align: middle; }
+.bw { background: rgba(245,183,61,0.15); color: #f5b73d; border: 1px solid rgba(245,183,61,0.3); }
+.bo { background: rgba(57,224,122,0.1); color: #39e07a; border: 1px solid rgba(57,224,122,0.25); }
+
+/* ===== GALLERY — 3 колонки ===== */
+#gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 3px;
+}
+
+.gcell {
+  display: block;
+  position: relative;
+  background: #161c24;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  /* padding-bottom делает высоту = ширине */
+  padding-bottom: 100%;
+  height: 0;
+}
+.gcell:active { opacity: 0.7; }
+.gcell img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+.gcell .noimg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.gcell .ginfo { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 14px 5px 4px; }
+.gcell .gnum { font-size: 10px; color: rgba(255,255,255,0.55); }
+.gcell .gown { font-size: 9px; color: #39e07a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* PRICE */
+.pricesec { padding: 12px; }
+.pcard { background: #0f1318; border: 1px solid #1e2530; border-radius: 12px; padding: 18px; margin-bottom: 10px; }
+.pticker { font-size: 10px; color: #4a5a6a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.pval { font-size: 30px; font-weight: 700; }
+.pusd { font-size: 12px; color: #5a6a7a; margin-top: 4px; }
+.phead { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.pbadge { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+.pbadge.up { background: rgba(57,224,122,0.1); color: #39e07a; border: 1px solid rgba(57,224,122,0.25); }
+.pbadge.off { background: #1e2530; color: #4a5a6a; }
+.prow { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #1a2028; font-size: 12px; }
+.prow:last-child { border-bottom: none; }
+.prl { color: #5a6a7a; }
+.prv { }
+.buybtn { display: block; width: 100%; padding: 13px; background: #39e07a; color: #000; font-size: 14px; font-weight: 700; border: none; border-radius: 12px; text-align: center; text-decoration: none; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.addr { font-size: 9px; color: #3a4a5a; word-break: break-all; padding: 10px 14px; background: #161c24; border-radius: 8px; margin: 0 0 10px; line-height: 1.6; font-family: monospace; }
+
+/* INFO */
+.infosec { padding: 12px; }
+.icard { background: #0f1318; border: 1px solid #1e2530; border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
+.irow { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid #1a2028; font-size: 12px; }
+.irow:last-child { border-bottom: none; }
+.irl { color: #5a6a7a; }
+.irr { color: #39e07a; text-decoration: none; }
+
+/* STATES */
+.loading { padding: 40px 20px; text-align: center; color: #4a5a6a; font-size: 13px; }
+.dots { display: flex; gap: 5px; justify-content: center; margin-bottom: 10px; }
+.dot { width: 5px; height: 5px; border-radius: 50%; background: #39e07a; animation: pulse 1.4s infinite; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes pulse { 0%,80%,100%{opacity:0.1;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }
+.rfbtn { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 8px 12px 14px; padding: 10px; background: transparent; border: 1px solid #1e2530; border-radius: 10px; color: #4a5a6a; font-size: 11px; cursor: pointer; width: calc(100% - 24px); text-transform: uppercase; letter-spacing: 0.5px; }
+</style>
 </head>
 <body>
 
@@ -235,92 +136,70 @@
   <div class="hicon">🗿</div>
   <div>
     <div class="htitle">Gargoyle Club</div>
-    <div class="hsub" id="hsub">scanning...</div>
+    <div class="hsub" id="hsub">сканируем...</div>
   </div>
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('holders')">Холдеры</div>
-  <div class="tab" onclick="switchTab('gallery')">Галерея</div>
-  <div class="tab" onclick="switchTab('price')">GOY</div>
-  <div class="tab" onclick="switchTab('info')">Инфо</div>
+  <div class="tab active" onclick="go('holders')">Холдеры</div>
+  <div class="tab" onclick="go('gallery')">Галерея</div>
+  <div class="tab" onclick="go('price')">GOY</div>
+  <div class="tab" onclick="go('info')">Инфо</div>
 </div>
 
-<!-- HOLDERS -->
+<!-- ХОЛДЕРЫ -->
 <div id="panel-holders" class="panel active">
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="slabel">Холдеров</div>
-      <div class="sval" id="stat-holders">—</div>
-      <div class="ssub">уникальных</div>
-    </div>
-    <div class="stat-card">
-      <div class="slabel">Gargoyle</div>
-      <div class="sval" id="stat-total">—</div>
-      <div class="ssub">найдено</div>
-    </div>
+  <div class="stats">
+    <div class="scard"><div class="sl">Холдеров</div><div class="sv" id="st-holders">—</div><div class="ss">уникальных</div></div>
+    <div class="scard"><div class="sl">Gargoyle</div><div class="sv" id="st-total">—</div><div class="ss">найдено</div></div>
   </div>
-  <div id="h-prog" class="prog-wrap" style="display:none;">
-    <div class="prog-bar"><div class="prog-fill" id="h-fill"></div></div>
-    <div class="prog-text" id="h-text">Сканируем...</div>
-  </div>
-  <div class="sec-label">Рейтинг держателей</div>
-  <div class="holder-list" id="holders-list" style="display:block;width:100%;">
-    <div class="empty"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>Сканируем коллекцию...</div>
-  </div>
-  <button class="refresh-btn" onclick="startScan(true)">↻ пересканировать</button>
+  <div class="prog" id="hp"><div class="progbar"><div class="progfill" id="hf"></div></div><div class="progtxt" id="ht">...</div></div>
+  <div class="seclabel">Рейтинг держателей</div>
+  <div id="holders-list" style="display:block;width:100%;"><div class="loading"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>Сканируем...</div></div>
+  <button class="rfbtn" onclick="scan(true)">↻ пересканировать</button>
 </div>
 
-<!-- GALLERY -->
+<!-- ГАЛЕРЕЯ -->
 <div id="panel-gallery" class="panel">
-  <div id="g-prog" class="prog-wrap" style="display:none;padding-top:10px;">
-    <div class="prog-bar"><div class="prog-fill" id="g-fill"></div></div>
-    <div class="prog-text" id="g-text">Сканируем...</div>
-  </div>
-  <div class="gallery-wrap" id="gallery-wrap">
-    <div class="empty"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>Загружаем...</div>
-  </div>
-  <button class="refresh-btn" onclick="startScan(true)">↻ обновить</button>
+  <div class="prog" id="gp" style="padding-top:10px;"><div class="progbar"><div class="progfill" id="gf"></div></div><div class="progtxt" id="gt">...</div></div>
+  <div id="gallery-grid"><div class="loading" style="grid-column:1/-1"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>Загружаем...</div></div>
+  <button class="rfbtn" onclick="scan(true)">↻ обновить</button>
 </div>
 
-<!-- PRICE -->
+<!-- GOY -->
 <div id="panel-price" class="panel">
-  <div class="price-wrap">
-    <div class="price-card">
-      <div class="p-head">
-        <div>
-          <div class="p-ticker">GOY / TON</div>
-          <div class="p-val" id="p-val">—</div>
-          <div class="p-usd" id="p-usd">загружаем...</div>
-        </div>
-        <div class="p-badge off" id="p-badge">···</div>
+  <div class="pricesec">
+    <div class="pcard">
+      <div class="phead">
+        <div><div class="pticker">GOY / TON</div><div class="pval" id="pv">—</div><div class="pusd" id="pu">загружаем...</div></div>
+        <div class="pbadge off" id="pb">···</div>
       </div>
-      <div class="p-row"><span class="p-rl">Эмиссия</span><span class="p-rv">167 000 GOY</span></div>
-      <div class="p-row"><span class="p-rl">Обновлено</span><span class="p-rv" id="p-upd">—</span></div>
+      <div class="prow"><span class="prl">Эмиссия</span><span class="prv">167 000 GOY</span></div>
+      <div class="prow"><span class="prl">Обновлено</span><span class="prv" id="pupd">—</span></div>
     </div>
-    <a class="buy-btn" href="https://app.ston.fi/swap?inputCurrency=TON&outputCurrency=EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">Купить GOY</a>
-    <div style="height:14px"></div>
-    <div class="sec-label">Контракт</div>
+    <a class="buybtn" href="https://app.ston.fi/swap?inputCurrency=TON&outputCurrency=EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">Купить GOY</a>
+    <div style="height:12px"></div>
+    <div class="seclabel">Контракт</div>
     <div class="addr">EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa</div>
-    <button class="refresh-btn" onclick="loadPrice()">↻ обновить курс</button>
+    <button class="rfbtn" onclick="loadPrice()">↻ обновить курс</button>
   </div>
 </div>
 
-<!-- INFO -->
+<!-- ИНФО -->
 <div id="panel-info" class="panel">
-  <div class="info-wrap">
-    <div class="info-card">
-      <div class="info-row"><span class="ir-l">Коллекция</span><span class="ir-r">RareBird</span></div>
-      <div class="info-row"><span class="ir-l">Модель</span><span class="ir-r">Gargoyle</span></div>
-      <div class="info-row"><span class="ir-l">Эмиссия GOY</span><span class="ir-r">167 000</span></div>
-      <div class="info-row"><span class="ir-l">Сеть</span><span class="ir-r">TON</span></div>
+  <div class="infosec">
+    <div class="icard">
+      <div class="irow"><span class="irl">Коллекция</span><span>RareBird</span></div>
+      <div class="irow"><span class="irl">Модель</span><span>Gargoyle</span></div>
+      <div class="irow"><span class="irl">Эмиссия GOY</span><span>167 000</span></div>
+      <div class="irow"><span class="irl">Сеть</span><span>TON</span></div>
     </div>
-    <div class="sec-label" style="padding-top:6px">Ссылки</div>
-    <div class="info-card">
-      <div class="info-row"><span class="ir-l">Marketapp</span><a class="ir-link" href="https://marketapp.ws/collection/EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl/?tab=nfts&attrs=Model%7EGargoyle" target="_blank">открыть →</a></div>
-      <div class="info-row"><span class="ir-l">GetGems</span><a class="ir-link" href="https://getgems.io/gifts-collection?filter=%7B%22collections%22%3A%5B%22EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl%22%5D%2C%22attributes%22%3A%7B%22Model%22%3A%5B%22Gargoyle%22%5D%7D%7D" target="_blank">открыть →</a></div>
-      <div class="info-row"><span class="ir-l">Tonscan</span><a class="ir-link" href="https://tonscan.org/jetton/EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">открыть →</a></div>
-      <div class="info-row"><span class="ir-l">STON.fi</span><a class="ir-link" href="https://app.ston.fi/swap?inputCurrency=TON&outputCurrency=EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">купить →</a></div>
+    <div class="seclabel" style="padding-top:6px">Ссылки</div>
+    <div class="icard">
+      <div class="irow"><span class="irl">Marketapp</span><a class="irr" href="https://marketapp.ws/collection/EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl/?tab=nfts&attrs=Model%7EGargoyle" target="_blank">открыть →</a></div>
+      <div class="irow"><span class="irl">GetGems</span><a class="irr" href="https://getgems.io/gifts-collection?filter=%7B%22collections%22%3A%5B%22EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl%22%5D%2C%22attributes%22%3A%7B%22Model%22%3A%5B%22Gargoyle%22%5D%7D%7D" target="_blank">открыть →</a></div>
+      <div class="irow"><span class="irl">Tonscan</span><a class="irr" href="https://tonscan.org/jetton/EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">открыть →</a></div>
+      <div class="irow"><span class="irl">STON.fi</span><a class="irr" href="https://app.ston.fi/swap?inputCurrency=TON&outputCurrency=EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">купить →</a></div>
     </div>
   </div>
 </div>
@@ -328,205 +207,133 @@
 <script>
 if (window.Telegram?.WebApp) { window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand(); }
 
-const WORKER = 'https://test.aatkkj.workers.dev';
+const W = 'https://test.aatkkj.workers.dev';
 const GOY = 'EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa';
-const TONAPI = 'https://tonapi.io/v2';
+const API = 'https://tonapi.io/v2';
 const TOTAL = 14971;
 const BATCH = 50;
-const CACHE_KEY = 'gc_v6';
-const CACHE_TS = 'gc_ts6';
-const TTL = 3600000;
+const CK = 'gc8'; const CT = 'gct8';
 
-const TABS = ['holders','gallery','price','info'];
 const PALS = [
   ['#0d2018','#39e07a'],['#0d1220','#818cf8'],['#200d0d','#f87171'],
   ['#201500','#fbbf24'],['#0d1f20','#22d3ee'],['#1a0d20','#e879f9'],
   ['#1a1200','#f59e0b'],['#001a0d','#34d399'],
 ];
 
-let gargs = [];
-let scanning = false;
+let gargs = [], running = false;
 
-function switchTab(n) {
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', TABS[i]===n));
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-'+n).classList.add('active');
+function go(name) {
+  ['holders','gallery','price','info'].forEach((t,i) => {
+    document.querySelectorAll('.tab')[i].classList.toggle('active', t===name);
+    document.getElementById('panel-'+t).classList.toggle('active', t===name);
+  });
 }
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
-function loadCache() {
+function getCache() {
   try {
-    if (Date.now() - +localStorage.getItem(CACHE_TS) > TTL) return null;
-    const d = localStorage.getItem(CACHE_KEY);
+    if (Date.now()-+localStorage.getItem(CT) > 3600000) return null;
+    const d = localStorage.getItem(CK);
     return d ? JSON.parse(d) : null;
   } catch { return null; }
 }
-function saveCache(d) {
-  try { localStorage.setItem(CACHE_KEY, JSON.stringify(d)); localStorage.setItem(CACHE_TS, Date.now()); } catch {}
+function setCache(d) { try { localStorage.setItem(CK,JSON.stringify(d)); localStorage.setItem(CT,Date.now()); } catch {} }
+
+async function fetchBatch(from, to) {
+  try { const r = await fetch(`${W}?action=scan&from=${from}&to=${to}`); const d = await r.json(); return d.gargoyles||[]; } catch { return []; }
 }
 
-async function scanBatch(from, to) {
-  try {
-    const r = await fetch(`${WORKER}?action=scan&from=${from}&to=${to}`);
-    const d = await r.json();
-    return d.gargoyles || [];
-  } catch { return []; }
-}
-
-// Галерея — строки по 3
-function renderGallery() {
-  const wrap = document.getElementById('gallery-wrap');
-  if (!gargs.length) {
-    wrap.innerHTML = '<div class="empty">Ещё не найдено...</div>';
-    return;
-  }
-  const sorted = [...gargs].sort((a,b) => +a.num - +b.num);
-  let html = '';
-  for (let i = 0; i < sorted.length; i += 3) {
-    const row = sorted.slice(i, i+3);
-    // Дополняем до 3 если неполная строка
-    while (row.length < 3) row.push(null);
-    html += '<div class="gallery-row">';
-    row.forEach(item => {
-      if (!item) {
-        html += '<div class="gallery-cell" style="background:transparent;pointer-events:none;"></div>';
-        return;
-      }
-      const link = `https://t.me/nft/RareBird-${item.num}`;
-      const owner1 = item.owner ? item.owner.split(' ')[0] : '';
-      const img = item.image
-        ? `<img src="${item.image}" loading="lazy" onerror="this.remove()">`
-        : `<div class="no-img">🗿</div>`;
-      html += `<a class="gallery-cell" href="${link}" target="_blank">
-        ${img}
-        <div class="gallery-info">
-          <div class="gallery-num">#${item.num}</div>
-          ${owner1 ? `<div class="gallery-owner">${owner1}</div>` : ''}
-        </div>
-      </a>`;
-    });
-    html += '</div>';
-  }
-  wrap.innerHTML = html;
-}
-
-// Холдеры — вертикальный список
-function renderHolders() {
-  const ownerMap = {}, ownerNFTs = {};
-  gargs.forEach(item => {
-    if (!item.owner) return;
-    ownerMap[item.owner] = (ownerMap[item.owner]||0)+1;
-    if (!ownerNFTs[item.owner]) ownerNFTs[item.owner] = [];
-    ownerNFTs[item.owner].push(item);
-  });
-
-  const sorted = Object.entries(ownerMap).sort((a,b) => b[1]-a[1]);
-  const total = gargs.length;
-
-  document.getElementById('stat-holders').textContent = sorted.length || '—';
-  document.getElementById('stat-total').textContent = gargs.length || '—';
-  document.getElementById('hsub').textContent = `${gargs.length} gargoyle · goy token`;
-
-  const list = document.getElementById('holders-list');
-
-  if (!sorted.length) {
-    list.innerHTML = '<div class="empty">Сканируем... подождите</div>';
-    return;
-  }
-
-  let html = '';
-  sorted.slice(0, 60).forEach(([owner, count], i) => {
-    const pct = ((count/total)*100).toFixed(1);
-    const [bg, fg] = PALS[i % PALS.length];
-    const rCls = i===0?'gold':i===1?'silver':i===2?'bronze':'other';
-    const rSym = i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
-    const badge = count>=5
-      ? '<span class="badge badge-whale">whale</span>'
-      : count>=2 ? '<span class="badge badge-og">og</span>' : '';
-    const chips = (ownerNFTs[owner]||[]).map(n =>
-      `<a class="h-chip" href="https://t.me/nft/RareBird-${n.num}" target="_blank" onclick="event.stopPropagation()">#${n.num}</a>`
-    ).join('');
-
-    html += `<div class="holder-row">
-      <div class="h-rank ${rCls}">${rSym}</div>
-      <div class="h-avatar" style="background:${bg};color:${fg};border:1px solid ${fg}33;">${owner.slice(0,2).toUpperCase()}</div>
-      <div class="h-body">
-        <div class="h-name">${owner}${badge}</div>
-        <div class="h-chips">${chips}</div>
+function drawGallery() {
+  const el = document.getElementById('gallery-grid');
+  if (!gargs.length) { el.innerHTML='<div class="loading" style="grid-column:1/-1">Не найдено</div>'; return; }
+  const s = [...gargs].sort((a,b)=>+a.num-+b.num);
+  el.innerHTML = s.map(item => {
+    const img = item.image
+      ? `<img src="${item.image}" loading="lazy" onerror="this.remove()">`
+      : `<div class="noimg">🗿</div>`;
+    const own = item.owner ? item.owner.split(' ')[0] : '';
+    return `<a class="gcell" href="https://t.me/nft/RareBird-${item.num}" target="_blank">
+      ${img}
+      <div class="ginfo">
+        <div class="gnum">#${item.num}</div>
+        ${own?`<div class="gown">${own}</div>`:''}
       </div>
-      <div class="h-right">
-        <div class="h-count">${count}</div>
-        <div class="h-pct">${pct}%</div>
+    </a>`;
+  }).join('');
+}
+
+function drawHolders() {
+  const om={}, on={};
+  gargs.forEach(g=>{ if(!g.owner)return; om[g.owner]=(om[g.owner]||0)+1; (on[g.owner]=on[g.owner]||[]).push(g); });
+  const s=Object.entries(om).sort((a,b)=>b[1]-a[1]);
+  const tot=gargs.length;
+  document.getElementById('st-holders').textContent=s.length||'—';
+  document.getElementById('st-total').textContent=gargs.length||'—';
+  document.getElementById('hsub').textContent=`${gargs.length} gargoyle · goy token`;
+  const el=document.getElementById('holders-list');
+  if(!s.length){el.innerHTML='<div class="loading">Сканируем...</div>';return;}
+  el.innerHTML=s.map(([own,cnt],i)=>{
+    const pct=((cnt/tot)*100).toFixed(1);
+    const [bg,fg]=PALS[i%PALS.length];
+    const rc=i===0?'g':i===1?'s':i===2?'b':'';
+    const rs=i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
+    const bdg=cnt>=5?`<span class="badge bw">whale</span>`:cnt>=2?`<span class="badge bo">og</span>`:'';
+    const chips=(on[own]||[]).map(n=>`<a class="hchip" href="https://t.me/nft/RareBird-${n.num}" target="_blank" onclick="event.stopPropagation()">#${n.num}</a>`).join('');
+    return `<div class="hrow" style="display:flex;flex-direction:row;width:100%;align-items:flex-start;">
+      <div class="hrank ${rc}">${rs}</div>
+      <div class="havatar" style="background:${bg};color:${fg};border:1px solid ${fg}33">${own.slice(0,2).toUpperCase()}</div>
+      <div class="hbody">
+        <div class="hname">${own}${bdg}</div>
+        <div class="hchips">${chips}</div>
       </div>
+      <div class="hright"><div class="hcount">${cnt}</div><div class="hpct">${pct}%</div></div>
     </div>`;
-  });
-
-  list.innerHTML = html;
+  }).join('');
 }
 
-function updateProg(scanned, found) {
-  const pct = Math.round(scanned/TOTAL*100)+'%';
-  const txt = `${scanned}/${TOTAL} · найдено: ${found}`;
-  ['h','g'].forEach(p => {
-    document.getElementById(`${p}-fill`).style.width = pct;
-    document.getElementById(`${p}-text`).textContent = txt;
-  });
+function updProg(sc,found) {
+  const p=Math.round(sc/TOTAL*100)+'%', t=`${sc}/${TOTAL} · найдено: ${found}`;
+  document.getElementById('hf').style.width=p; document.getElementById('ht').textContent=t;
+  document.getElementById('gf').style.width=p; document.getElementById('gt').textContent=t;
 }
 
-async function startScan(force=false) {
-  if (scanning) return;
-  if (!force) {
-    const c = loadCache();
-    if (c?.length) { gargs = c; renderGallery(); renderHolders(); return; }
+async function scan(force=false) {
+  if(running)return;
+  if(!force){const c=getCache();if(c?.length){gargs=c;drawGallery();drawHolders();return;}}
+  running=true; gargs=[];
+  document.getElementById('hp').style.display='block';
+  document.getElementById('gp').style.display='block';
+  document.getElementById('holders-list').innerHTML='<div class="loading"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>Сканируем...</div>';
+  document.getElementById('gallery-grid').innerHTML='<div class="loading" style="grid-column:1/-1"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>Сканируем...</div>';
+  let sc=0;
+  for(let f=1;f<=TOTAL;f+=BATCH){
+    const t=Math.min(f+BATCH-1,TOTAL);
+    const found=await fetchBatch(f,t);
+    if(found.length){gargs.push(...found);drawGallery();drawHolders();}
+    sc+=t-f+1; updProg(sc,gargs.length); await sleep(50);
   }
-
-  scanning = true;
-  gargs = [];
-  ['h-prog','g-prog'].forEach(id => document.getElementById(id).style.display='block');
-  document.getElementById('holders-list').innerHTML = '<div class="empty"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>Сканируем...</div>';
-  document.getElementById('gallery-wrap').innerHTML = '<div class="empty"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>Сканируем...</div>';
-
-  let scanned = 0;
-  for (let from=1; from<=TOTAL; from+=BATCH) {
-    const to = Math.min(from+BATCH-1, TOTAL);
-    const found = await scanBatch(from, to);
-    if (found.length) { gargs.push(...found); renderGallery(); renderHolders(); }
-    scanned += to-from+1;
-    updateProg(scanned, gargs.length);
-    await sleep(50);
-  }
-
-  scanning = false;
-  ['h-prog','g-prog'].forEach(id => document.getElementById(id).style.display='none');
-  saveCache(gargs);
-  renderGallery();
-  renderHolders();
+  running=false;
+  document.getElementById('hp').style.display='none';
+  document.getElementById('gp').style.display='none';
+  setCache(gargs); drawGallery(); drawHolders();
 }
 
 async function loadPrice() {
   try {
-    const r = await fetch(`${TONAPI}/rates?tokens=${GOY}&currencies=ton,usd`);
-    const d = await r.json();
-    const rate = d.rates?.[GOY];
-    if (rate?.prices) {
-      const ton = parseFloat(rate.prices.TON||0);
-      const usd = parseFloat(rate.prices.USD||0);
-      document.getElementById('p-val').textContent = ton>0?ton.toFixed(6):'0.001';
-      document.getElementById('p-usd').textContent = usd>0?`≈ $${usd.toFixed(6)}`:'';
-      document.getElementById('p-badge').textContent = 'live';
-      document.getElementById('p-badge').className = 'p-badge up';
+    const r=await fetch(`${API}/rates?tokens=${GOY}&currencies=ton,usd`);
+    const d=await r.json(); const rt=d.rates?.[GOY];
+    if(rt?.prices){
+      const ton=parseFloat(rt.prices.TON||0), usd=parseFloat(rt.prices.USD||0);
+      document.getElementById('pv').textContent=ton>0?ton.toFixed(6):'0.001';
+      document.getElementById('pu').textContent=usd>0?`≈ $${usd.toFixed(6)}`:'';
+      document.getElementById('pb').textContent='live'; document.getElementById('pb').className='pbadge up';
     }
-  } catch {
-    document.getElementById('p-badge').textContent = 'offline';
-    document.getElementById('p-badge').className = 'p-badge off';
-  }
-  document.getElementById('p-upd').textContent = new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+  } catch { document.getElementById('pb').textContent='offline'; document.getElementById('pb').className='pbadge off'; }
+  document.getElementById('pupd').textContent=new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
 }
 
-startScan();
-loadPrice();
-setInterval(loadPrice, 30000);
+scan(); loadPrice(); setInterval(loadPrice,30000);
 </script>
 </body>
 </html>
