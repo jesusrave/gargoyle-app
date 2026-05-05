@@ -12,9 +12,8 @@
     .header-icon { width: 42px; height: 42px; border-radius: 50%; background: #1a1a1a; border: 0.5px solid #333; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
     .header-title { font-size: 16px; font-weight: 600; }
     .header-sub { font-size: 11px; color: #555; margin-top: 2px; }
-    .tabs { display: flex; background: #111; border-bottom: 0.5px solid #222; position: sticky; top: 70px; z-index: 9; overflow-x: auto; }
-    .tabs::-webkit-scrollbar { display: none; }
-    .tab { flex: 1; min-width: 70px; padding: 12px 6px; text-align: center; font-size: 12px; color: #555; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; user-select: none; }
+    .tabs { display: flex; background: #111; border-bottom: 0.5px solid #222; position: sticky; top: 70px; z-index: 9; }
+    .tab { flex: 1; padding: 12px 6px; text-align: center; font-size: 12px; color: #555; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; user-select: none; }
     .tab.active { color: #4ade80; border-bottom-color: #4ade80; }
     .panel { display: none; }
     .panel.active { display: block; }
@@ -24,19 +23,20 @@
     .stat-value { font-size: 22px; font-weight: 600; color: #fff; }
     .stat-sub { font-size: 10px; color: #4ade80; margin-top: 3px; }
     .section-label { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 14px 8px; }
-    .holder-row { display: flex; align-items: flex-start; gap: 10px; padding: 11px 14px; border-bottom: 0.5px solid #181818; cursor: pointer; transition: background 0.15s; }
+    .holder-row { display: flex; align-items: flex-start; gap: 10px; padding: 11px 14px; border-bottom: 0.5px solid #181818; cursor: pointer; }
     .holder-row:active { background: #161616; }
-    .rank { font-size: 12px; color: #444; width: 20px; text-align: center; flex-shrink: 0; padding-top: 2px; }
+    .rank { font-size: 12px; color: #444; width: 20px; text-align: center; flex-shrink: 0; padding-top: 10px; }
     .rank.gold { color: #fbbf24; } .rank.silver { color: #9ca3af; } .rank.bronze { color: #cd7f32; }
-    .avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+    .holder-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: #1e1e1e; border: 0.5px solid #333; }
+    .holder-avatar-placeholder { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
     .holder-info { flex: 1; min-width: 0; }
-    .holder-name { font-size: 13px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 5px; }
-    .holder-addr { font-size: 10px; color: #444; font-family: monospace; margin-top: 2px; }
-    .holder-right { text-align: right; flex-shrink: 0; }
-    .holder-nft { font-size: 15px; font-weight: 600; color: #fff; }
+    .holder-name { font-size: 14px; color: #fff; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+    .holder-nfts { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+    .nft-chip { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; padding: 3px 8px; background: #1a2a3a; color: #60a5fa; border-radius: 20px; text-decoration: none; }
+    .holder-right { text-align: right; flex-shrink: 0; padding-top: 2px; }
+    .holder-count { font-size: 18px; font-weight: 600; color: #fff; }
     .holder-pct { font-size: 10px; color: #555; margin-top: 2px; }
-    .tg-btn { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; padding: 3px 7px; background: #1a2a3a; color: #60a5fa; border-radius: 20px; text-decoration: none; margin-top: 4px; margin-right: 3px; }
-    .badge { font-size: 10px; padding: 2px 6px; border-radius: 20px; font-weight: 500; }
+    .badge { font-size: 10px; padding: 2px 6px; border-radius: 20px; font-weight: 500; margin-left: 4px; }
     .badge-whale { background: #2a1e00; color: #fbbf24; }
     .badge-og { background: #1e2a1e; color: #4ade80; }
     .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; padding: 3px; }
@@ -45,7 +45,8 @@
     .gallery-img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 26px; background: #1a1a1a; }
     .gallery-num { position: absolute; bottom: 4px; left: 4px; font-size: 10px; background: rgba(0,0,0,0.75); color: #aaa; padding: 1px 5px; border-radius: 6px; }
-    .gallery-dot { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; border-radius: 50%; background: #4ade80; }
+    .gallery-owner { position: absolute; bottom: 4px; right: 4px; font-size: 9px; background: rgba(0,0,0,0.8); color: #4ade80; padding: 1px 5px; border-radius: 6px; max-width: 70%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .gallery-loading { position: absolute; top: 4px; right: 4px; width: 6px; height: 6px; border-radius: 50%; background: #fbbf24; animation: blink 1s infinite; }
     .price-section { padding: 12px; }
     .price-card { background: #161616; border: 0.5px solid #222; border-radius: 14px; padding: 18px; margin-bottom: 10px; }
     .price-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
@@ -68,7 +69,10 @@
     .info-row-val { font-size: 13px; color: #fff; }
     .link-val { color: #4ade80; text-decoration: none; }
     .contract-addr { font-family: monospace; font-size: 10px; color: #444; word-break: break-all; padding: 10px 14px; background: #111; border-radius: 8px; margin: 0 12px 12px; }
-    .loading-state { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 40px 20px; color: #444; font-size: 14px; }
+    .loading-state { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 40px 20px; color: #444; font-size: 14px; flex-direction: column; }
+    .progress-bar { width: calc(100% - 28px); height: 3px; background: #1e1e1e; border-radius: 3px; margin: 0 14px; overflow: hidden; }
+    .progress-fill { height: 100%; background: #4ade80; border-radius: 3px; transition: width 0.3s; }
+    .progress-text { font-size: 11px; color: #555; padding: 4px 14px 8px; text-align: center; }
     .dots { display: flex; gap: 4px; }
     .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: blink 1.2s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
@@ -85,7 +89,7 @@
   <div class="header-icon">🗿</div>
   <div>
     <div class="header-title">Gargoyle Club</div>
-    <div class="header-sub">167 NFT · GOY Token · TON</div>
+    <div class="header-sub" id="header-sub">Загружаем...</div>
   </div>
 </div>
 
@@ -106,24 +110,28 @@
     </div>
     <div class="stat-card">
       <div class="stat-label">Gargoyle NFT</div>
-      <div class="stat-value" id="stat-total-nft">167</div>
-      <div class="stat-sub">выпущено</div>
+      <div class="stat-value" id="stat-total">—</div>
+      <div class="stat-sub">найдено</div>
     </div>
   </div>
-  <div class="section-label">Топ держателей · нажмите для перехода</div>
+  <div class="section-label">Рейтинг держателей</div>
   <div id="holders-list">
-    <div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div> Загружаем...</div>
+    <div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Загружаем...</span></div>
   </div>
-  <button class="refresh-btn" onclick="loadData()">↻ Обновить</button>
+  <button class="refresh-btn" onclick="startLoad()">↻ Обновить</button>
 </div>
 
 <!-- GALLERY -->
 <div id="panel-gallery" class="panel">
-  <div style="padding:10px 14px 6px;font-size:11px;color:#555;">Нажмите на NFT чтобы открыть в Telegram · зелёная точка = есть владелец</div>
-  <div id="gallery-grid" class="gallery-grid">
-    <div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div> Загружаем...</div>
+  <div style="padding:8px 14px 4px;font-size:11px;color:#555;">Нажмите на NFT → откроется в Telegram · <span style="color:#4ade80;">●</span> владелец загружен</div>
+  <div id="gallery-progress" style="display:none;">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-text" id="progress-text">Загружаем владельцев...</div>
   </div>
-  <button class="refresh-btn" onclick="loadData()">↻ Обновить</button>
+  <div id="gallery-grid" class="gallery-grid">
+    <div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Загружаем...</span></div>
+  </div>
+  <button class="refresh-btn" onclick="startLoad()">↻ Обновить</button>
 </div>
 
 <!-- PRICE -->
@@ -154,17 +162,16 @@
   <div style="padding:12px;">
     <div class="info-card">
       <div class="info-row"><span class="info-row-label">Коллекция</span><span class="info-row-val">Gargoyle (RareBird)</span></div>
-      <div class="info-row"><span class="info-row-label">Всего NFT</span><span class="info-row-val">167 штук</span></div>
       <div class="info-row"><span class="info-row-label">Токен</span><span class="info-row-val">GOY</span></div>
       <div class="info-row"><span class="info-row-label">Эмиссия</span><span class="info-row-val">167 000 GOY</span></div>
       <div class="info-row"><span class="info-row-label">Сеть</span><span class="info-row-val">TON Blockchain</span></div>
     </div>
     <div class="section-label" style="padding-top:6px;">Ссылки</div>
     <div class="info-card">
-      <div class="info-row"><span class="info-row-label">NFT на GetGems</span><a class="link-val" href="https://getgems.io/gifts-collection?filter=%7B%22collections%22%3A%5B%22EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl%22%5D%2C%22attributes%22%3A%7B%22Model%22%3A%5B%22Gargoyle%22%5D%7D%7D" target="_blank">Открыть →</a></div>
-      <div class="info-row"><span class="info-row-label">Токен на Tonscan</span><a class="link-val" href="https://tonscan.org/jetton/EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">Открыть →</a></div>
+      <div class="info-row"><span class="info-row-label">Все Gargoyle</span><a class="link-val" href="https://marketapp.ws/collection/EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl/?tab=nfts&attrs=Model%7EGargoyle" target="_blank">Marketapp →</a></div>
+      <div class="info-row"><span class="info-row-label">GetGems</span><a class="link-val" href="https://getgems.io/gifts-collection?filter=%7B%22collections%22%3A%5B%22EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl%22%5D%2C%22attributes%22%3A%7B%22Model%22%3A%5B%22Gargoyle%22%5D%7D%7D" target="_blank">Открыть →</a></div>
+      <div class="info-row"><span class="info-row-label">Токен GOY</span><a class="link-val" href="https://tonscan.org/jetton/EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">Tonscan →</a></div>
       <div class="info-row"><span class="info-row-label">Купить GOY</span><a class="link-val" href="https://app.ston.fi/swap?inputCurrency=TON&outputCurrency=EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">STON.fi →</a></div>
-      <div class="info-row"><span class="info-row-label">Tonviewer</span><a class="link-val" href="https://tonviewer.com/EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa" target="_blank">Открыть →</a></div>
     </div>
   </div>
 </div>
@@ -175,14 +182,19 @@
     window.Telegram.WebApp.expand();
   }
 
-  const COLLECTION = 'EQAIwEMO6wB8Iby8Va0EQGPkDWcVc6uUmMOfXmEyqZmM93sl';
+  const WORKER = 'https://test.aatkkj.workers.dev';
   const GOY = 'EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa';
-  const API = 'https://tonapi.io/v2';
+  const TONAPI = 'https://tonapi.io/v2';
   const TABS = ['holders','gallery','price','info'];
   const COLORS = [
     ['#1e2a1e','#4ade80'],['#1e1e2a','#818cf8'],['#2a1e1e','#f87171'],
     ['#2a1e00','#fbbf24'],['#1e2a2a','#22d3ee'],['#2a1e2a','#e879f9'],
   ];
+
+  // Кэш владельцев
+  const ownerCache = {};
+  // Все NFT
+  let allNFTs = [];
 
   function switchTab(name) {
     document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', TABS[i]===name));
@@ -190,136 +202,204 @@
     document.getElementById('panel-'+name).classList.add('active');
   }
 
-  function shortAddr(a) { return a.slice(0,6)+'...'+a.slice(-5); }
-  function initials(a) { return a.slice(2,4).toUpperCase(); }
   function rankCls(i) { return i===0?'gold':i===1?'silver':i===2?'bronze':''; }
   function rankSym(i) { return i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1; }
 
-  function nftNum(item) {
-    return (item.metadata?.name||'').match(/#(\d+)/)?.[1] || null;
-  }
-
-  function tgLink(item) {
-    const n = nftNum(item);
-    if (n) return 'https://t.me/nft/RareBird-'+n;
-    return 'https://tonviewer.com/'+(item.address||'');
-  }
-
-  async function fetchAll() {
-    let all = [], offset = 0;
-    while(true) {
-      const r = await fetch(`${API}/nfts/collections/${COLLECTION}/items?limit=1000&offset=${offset}`);
-      if (!r.ok) throw new Error('err');
-      const d = await r.json();
-      const batch = d.nft_items || [];
-      all = all.concat(batch);
-      if (batch.length < 1000) break;
-      offset += 1000;
+  // Загружаем список Gargoyle со всех страниц
+  async function fetchAllNFTs() {
+    const all = [];
+    let page = 1;
+    while (true) {
+      try {
+        const res = await fetch(`${WORKER}?action=list&page=${page}`);
+        const data = await res.json();
+        const items = data.items || [];
+        if (!items.length) break;
+        all.push(...items);
+        if (!data.hasMore || items.length < 5) break;
+        page++;
+        await sleep(200);
+      } catch(e) { break; }
     }
-    return all.filter(item => {
-      const attrs = item.metadata?.attributes || [];
-      return attrs.some(a => {
-        const tt = (a.trait_type||'').toLowerCase();
-        const v = (a.value||'').toLowerCase();
-        return tt === 'model' && v === 'gargoyle';
-      });
-    });
+    return all;
   }
 
-  function renderHolders(items) {
-    const ownerMap = {}, ownerItems = {};
-    items.forEach(item => {
-      const o = item.owner?.address;
-      if (!o) return;
-      ownerMap[o] = (ownerMap[o]||0)+1;
-      if (!ownerItems[o]) ownerItems[o] = [];
-      ownerItems[o].push(item);
-    });
-    const sorted = Object.entries(ownerMap).sort((a,b)=>b[1]-a[1]);
-    const total = items.length || 167;
-    document.getElementById('stat-holders').textContent = sorted.length;
-    const el = document.getElementById('stat-total-nft');
-    if (el) el.textContent = total;
+  // Загружаем данные одного NFT включая владельца
+  async function fetchNFT(num) {
+    if (ownerCache[num]) return ownerCache[num];
+    try {
+      const res = await fetch(`${WORKER}?num=${num}`);
+      const data = await res.json();
+      ownerCache[num] = data;
+      return data;
+    } catch(e) { return { num, owner: '', image: '' }; }
+  }
 
-    if (!sorted.length) {
-      document.getElementById('holders-list').innerHTML = '<div class="loading-state">Нет данных</div>';
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  // Рендер галереи — сначала без владельцев, потом обновляем
+  function renderGalleryItems(items) {
+    const grid = document.getElementById('gallery-grid');
+    if (!items.length) {
+      grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1;">Нет данных</div>';
       return;
     }
 
-    document.getElementById('holders-list').innerHTML = sorted.slice(0,50).map(([addr,count],i) => {
+    grid.innerHTML = items.map(item => {
+      const link = `https://t.me/nft/RareBird-${item.num}`;
+      const img = item.image || ownerCache[item.num]?.image || '';
+      const owner = ownerCache[item.num]?.owner || '';
+      const imgHtml = img
+        ? `<img class="gallery-img" id="gimg-${item.num}" src="${img}" loading="lazy" onerror="this.style.display='none'">`
+        : `<div class="gallery-placeholder">🗿</div>`;
+      return `<a class="gallery-item" href="${link}" target="_blank" id="gitem-${item.num}">
+        ${imgHtml}
+        <div class="gallery-num">#${item.num}</div>
+        ${owner ? `<div class="gallery-owner">${owner.split(' ')[0]}</div>` : `<div class="gallery-loading" id="gload-${item.num}"></div>`}
+      </a>`;
+    }).join('');
+  }
+
+  // Обновляем карточку в галерее когда загрузился владелец
+  function updateGalleryItem(num, data) {
+    const item = document.getElementById(`gitem-${num}`);
+    if (!item) return;
+
+    // Обновляем картинку если не было
+    const existImg = item.querySelector('.gallery-img');
+    if (!existImg && data.image) {
+      const placeholder = item.querySelector('.gallery-placeholder');
+      if (placeholder) {
+        const img = document.createElement('img');
+        img.className = 'gallery-img';
+        img.src = data.image;
+        img.loading = 'lazy';
+        item.insertBefore(img, placeholder);
+        placeholder.remove();
+      }
+    }
+
+    // Убираем лоадер
+    const loader = document.getElementById(`gload-${num}`);
+    if (loader) loader.remove();
+
+    // Добавляем владельца
+    if (data.owner) {
+      const existing = item.querySelector('.gallery-owner');
+      if (!existing) {
+        const ownerEl = document.createElement('div');
+        ownerEl.className = 'gallery-owner';
+        ownerEl.textContent = data.owner.split(' ')[0];
+        item.appendChild(ownerEl);
+      }
+    }
+  }
+
+  // Рендер холдеров из кэша
+  function renderHolders(items) {
+    const ownerMap = {};
+    const ownerNFTs = {};
+
+    items.forEach(item => {
+      const data = ownerCache[item.num];
+      const owner = data?.owner || '';
+      if (!owner) return;
+      ownerMap[owner] = (ownerMap[owner] || 0) + 1;
+      if (!ownerNFTs[owner]) ownerNFTs[owner] = [];
+      ownerNFTs[owner].push({ num: item.num, image: data?.image || item.image || '' });
+    });
+
+    const sorted = Object.entries(ownerMap).sort((a,b) => b[1]-a[1]);
+    const total = items.length;
+
+    document.getElementById('stat-holders').textContent = sorted.length || '—';
+
+    if (!sorted.length) {
+      document.getElementById('holders-list').innerHTML =
+        '<div style="padding:20px 14px;color:#555;font-size:13px;text-align:center;">Загружаем данные о владельцах...<br>Вернитесь через минуту</div>';
+      return;
+    }
+
+    document.getElementById('holders-list').innerHTML = sorted.slice(0,50).map(([owner, count], i) => {
       const pct = ((count/total)*100).toFixed(1);
       const [bg,fg] = COLORS[i%COLORS.length];
-      const badge = count>=5
-        ? '<span class="badge badge-whale">whale</span>'
-        : count>=2 ? '<span class="badge badge-og">OG</span>' : '';
+      const badge = count>=5?'<span class="badge badge-whale">whale</span>':count>=2?'<span class="badge badge-og">OG</span>':'';
+      const nfts = (ownerNFTs[owner]||[]).slice(0,5).map(n =>
+        `<a class="nft-chip" href="https://t.me/nft/RareBird-${n.num}" target="_blank" onclick="event.stopPropagation()">🗿 #${n.num}</a>`
+      ).join('');
 
-      const nftLinks = (ownerItems[addr]||[]).slice(0,4).map(item => {
-        const link = tgLink(item);
-        const num = nftNum(item);
-        const label = num ? '#'+num : (item.address||'').slice(0,6);
-        return `<a class="tg-btn" href="${link}" target="_blank">🗿 ${label}</a>`;
-      }).join('');
-
-      const viewerUrl = 'https://tonviewer.com/'+addr;
-      return `<div class="holder-row" onclick="window.open('${viewerUrl}','_blank')">
+      return `<div class="holder-row">
         <div class="rank ${rankCls(i)}">${rankSym(i)}</div>
-        <div class="avatar" style="background:${bg};color:${fg};">${initials(addr)}</div>
+        <div class="holder-avatar-placeholder" style="background:${bg};color:${fg};">${owner.slice(0,2)}</div>
         <div class="holder-info">
-          <div class="holder-name">${shortAddr(addr)} ${badge}</div>
-          <div class="holder-addr">${addr.slice(0,22)}...</div>
-          <div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:5px;" onclick="event.stopPropagation()">${nftLinks}</div>
+          <div class="holder-name">${owner}${badge}</div>
+          <div class="holder-nfts">${nfts}</div>
         </div>
         <div class="holder-right">
-          <div class="holder-nft">${count}</div>
+          <div class="holder-count">${count}</div>
           <div class="holder-pct">${pct}%</div>
         </div>
       </div>`;
     }).join('');
   }
 
-  function renderGallery(items) {
-    const sorted = [...items].sort((a,b) => {
-      const na = parseInt(nftNum(a)||'9999');
-      const nb = parseInt(nftNum(b)||'9999');
-      return na-nb;
-    });
-    document.getElementById('gallery-grid').innerHTML = sorted.map(item => {
-      const link = tgLink(item);
-      const img = item.previews?.find(p=>p.resolution==='500x500')?.url
-        || item.previews?.[1]?.url
-        || item.previews?.[0]?.url
-        || item.metadata?.image || '';
-      const num = nftNum(item);
-      const hasOwner = !!item.owner?.address;
-      const imgHtml = img
-        ? `<img class="gallery-img" src="${img}" alt="Gargoyle ${num||''}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=gallery-placeholder>🗿</div>${num?'<div class=gallery-num>#'+num+'</div>':''}${hasOwner?'<div class=gallery-dot></div>':''}">`
-        : `<div class="gallery-placeholder">🗿</div>`;
-      return `<a class="gallery-item" href="${link}" target="_blank">
-        ${imgHtml}
-        ${num?`<div class="gallery-num">#${num}</div>`:''}
-        ${hasOwner?'<div class="gallery-dot"></div>':''}
-      </a>`;
-    }).join('');
-  }
+  async function startLoad() {
+    // Сброс
+    document.getElementById('holders-list').innerHTML = '<div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Загружаем список...</span></div>';
+    document.getElementById('gallery-grid').innerHTML = '<div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span>Загружаем...</span></div>';
+    document.getElementById('stat-holders').textContent = '—';
+    document.getElementById('stat-total').textContent = '—';
 
-  async function loadData() {
-    const ldHolders = '<div class="loading-state"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div> Загружаем...</div>';
-    const ldGallery = '<div class="loading-state" style="grid-column:1/-1;"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div> Загружаем...</div>';
-    document.getElementById('holders-list').innerHTML = ldHolders;
-    document.getElementById('gallery-grid').innerHTML = ldGallery;
-    try {
-      const items = await fetchAll();
-      renderHolders(items);
-      renderGallery(items);
-    } catch(e) {
-      document.getElementById('holders-list').innerHTML = '<div class="error-state">Ошибка загрузки TON API. Проверьте соединение.</div>';
-      document.getElementById('gallery-grid').innerHTML = '<div class="error-state" style="grid-column:1/-1;">Ошибка загрузки. Попробуйте обновить.</div>';
+    // Шаг 1: получаем список всех Gargoyle
+    allNFTs = await fetchAllNFTs();
+
+    if (!allNFTs.length) {
+      document.getElementById('holders-list').innerHTML = '<div class="error-state">Не удалось загрузить список NFT</div>';
+      document.getElementById('gallery-grid').innerHTML = '<div class="error-state" style="grid-column:1/-1;">Ошибка загрузки</div>';
+      return;
     }
+
+    document.getElementById('stat-total').textContent = allNFTs.length;
+    document.getElementById('header-sub').textContent = `${allNFTs.length} Gargoyle · GOY Token`;
+
+    // Шаг 2: рендерим галерею сразу (без владельцев)
+    renderGalleryItems(allNFTs);
+
+    // Показываем прогресс-бар
+    const progressBar = document.getElementById('gallery-progress');
+    progressBar.style.display = 'block';
+
+    // Шаг 3: загружаем владельцев параллельно батчами
+    const BATCH = 5; // по 5 одновременно чтобы не перегружать
+    let loaded = 0;
+    const total = allNFTs.length;
+
+    for (let i = 0; i < allNFTs.length; i += BATCH) {
+      const batch = allNFTs.slice(i, i + BATCH);
+      await Promise.all(batch.map(async item => {
+        const data = await fetchNFT(item.num);
+        updateGalleryItem(item.num, data);
+        loaded++;
+        const pct = Math.round((loaded/total)*100);
+        document.getElementById('progress-fill').style.width = pct + '%';
+        document.getElementById('progress-text').textContent = `Загружаем владельцев: ${loaded}/${total}`;
+      }));
+      // Обновляем холдеров каждые 20 загрузок
+      if (loaded % 20 === 0 || loaded === total) {
+        renderHolders(allNFTs);
+      }
+      await sleep(100);
+    }
+
+    // Финальный рендер
+    renderHolders(allNFTs);
+    progressBar.style.display = 'none';
+    document.getElementById('progress-text').textContent = '';
   }
 
   async function loadPrice() {
     try {
-      const r = await fetch(`${API}/rates?tokens=${GOY}&currencies=ton,usd`);
+      const r = await fetch(`${TONAPI}/rates?tokens=${GOY}&currencies=ton,usd`);
       const d = await r.json();
       const rate = d.rates?.[GOY];
       if (rate?.prices) {
@@ -338,7 +418,7 @@
     document.getElementById('goy-updated').textContent = now.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
   }
 
-  loadData();
+  startLoad();
   loadPrice();
   setInterval(loadPrice, 30000);
 </script>
