@@ -94,8 +94,8 @@
     /* HOLDER ROWS - строго блочные */
     .holder-list { display: block; width: 100%; }
     .holder-row {
-      display: flex;
-      flex-direction: row;
+      display: flex !important;
+      flex-direction: row !important;
       align-items: flex-start;
       gap: 12px;
       padding: 14px 16px;
@@ -144,13 +144,13 @@
 
     /* GALLERY - строго 3 колонки */
     .gallery-wrap { padding: 4px; }
-    .gallery-row { display: flex; gap: 4px; margin-bottom: 4px; }
+    .gallery-row { display: flex; flex-direction: row; gap: 4px; margin-bottom: 4px; }
     .gallery-cell {
-      flex: 1; aspect-ratio: 1;
+      width: calc(33.333% - 3px); padding-bottom: calc(33.333% - 3px);
       background: var(--bg3); border-radius: 10px;
       overflow: hidden; position: relative;
       text-decoration: none; display: block;
-      min-width: 0;
+      flex-shrink: 0; height: 0;
     }
     .gallery-cell:active { opacity: 0.7; }
     .gallery-cell img {
@@ -265,7 +265,7 @@
     <div class="prog-text" id="h-text">Сканируем...</div>
   </div>
   <div class="sec-label">Рейтинг держателей</div>
-  <div class="holder-list" id="holders-list">
+  <div class="holder-list" id="holders-list" style="display:block;width:100%;">
     <div class="empty"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>Сканируем коллекцию...</div>
   </div>
   <button class="refresh-btn" onclick="startScan(true)">↻ пересканировать</button>
@@ -333,8 +333,8 @@ const GOY = 'EQB9brVi00e_l_wJLtqmHF_S5P5V2_1uocFKkKPA9lHMUbMa';
 const TONAPI = 'https://tonapi.io/v2';
 const TOTAL = 14971;
 const BATCH = 50;
-const CACHE_KEY = 'gc_v5';
-const CACHE_TS = 'gc_ts5';
+const CACHE_KEY = 'gc_v6';
+const CACHE_TS = 'gc_ts6';
 const TTL = 3600000;
 
 const TABS = ['holders','gallery','price','info'];
